@@ -1,0 +1,84 @@
+﻿@page "/users1"
+@using crudApp.Models
+@using User = crudApp.Models.User
+
+<h3>Users</h3>
+
+@* @if (users == null) *@
+@* { *@
+@*     <p> *@
+@*         <em>??This will allow new users to be added??</em> *@
+@*     </p> *@
+@* } *@
+@* else *@
+
+@* <TelerikGrid Pageable="true" Data="@UsersTable" *@
+@*              Sortable="true"> *@
+@*     <GridColumns > *@
+@*         <GridColumn Field="Name" Title="Users"></GridColumn> *@
+@*         <GridColumn Field="Email" Title="Email"></GridColumn> *@
+@*         <GridColumn Field="RoleId" Title="RoleId"></GridColumn> *@
+@*     </GridColumns > *@
+@*     </TelerikGrid> *@
+
+<TelerikGrid Pageable="true" Data="UsersTable" Sortable="true">
+    <GridColumns>
+        <GridColumn Field="Name" Title="User"></GridColumn>
+        <GridColumn Field="Email" Title="Email"></GridColumn>
+        <GridColumn Field="RoleId" Title="Role"></GridColumn>
+    </GridColumns>
+</TelerikGrid>
+<br/>
+
+<button class="btn btn-success" @onclick="NavigateToCreateUser">Create User</button>
+
+@code {
+    private List<User> UsersTable { get; set; }
+    
+    
+
+    [Inject]
+    // private UserService userService { get; set; }
+    // [Inject]
+    private NavigationManager navigationManager { get; set; }
+
+    /*protected override async Task OnInitializedAsync()
+     {
+         UsersTable = new List<User>();
+         for (int i=1; i<=5; i++)
+         {
+             var item = new User();
+             item.Id = i;
+             item.Name = "";
+             item.Email = "";
+             item.RoleId = ""; 
+             UsersTable.Add(item);
+         }
+     }*/
+
+    protected override async Task OnInitializedAsync()
+    {
+        UsersTable = new List<User>();
+        for (int i = 1; i <= 5; i++)
+        {
+            var item = new User();
+            item.Id = i;
+            item.Name = "";
+            item.Email = "";
+            item.RoleId = "";
+            UsersTable.Add(item);
+        }
+    }
+
+    private void NavigateToCreateUser()
+    {
+        navigationManager.NavigateTo("/createuser1");
+    }
+
+    private async Task DeleteUser(int id)
+    {
+    // await userService.DeleteUserAsync(id);
+    // users = await userService.GetUsersAsync();
+    }
+
+}
