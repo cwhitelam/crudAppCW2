@@ -12,6 +12,17 @@ public class AppDbContext : DbContext
         Roles = roles;
     }
 
+    public AppDbContext()
+    {
+        
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (optionsBuilder.IsConfigured) return;
+        optionsBuilder.UseSqlite("Data Source=Data/crudAppDb.sqlite");
+    }
+
     private DbSet<User> Users { get; set; }
     private IEnumerable Roles { get; set; }
 }
