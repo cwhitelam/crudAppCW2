@@ -1,0 +1,62 @@
+﻿@page "/Users"
+@using crudAppCW2.Models
+<h3>Users</h3>
+
+@if (UsersTable == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Email</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in UsersTable)
+            {
+                <tr>
+                    <td>@user.Name</td>
+                    <td>@user.Email</td>
+                    <td>@user.RoleId</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<button class="btn btn-success" @onclick="NavigateToCreateUser">Create User</button>
+
+
+
+
+
+@code {
+    private List<User> UsersTable { get; set; }
+    
+    [Inject]
+    private NavigationManager _navigationManager { get; set; }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        UsersTable = new List<User>();
+        for (int i = 1; i <= 5; i++)
+        {
+            var item = new User();
+            item.Id = i;
+            item.Name = "";
+            item.Email = "";
+            item.RoleId = "";
+            UsersTable.Add(item);
+        }
+    }
+    
+    private void NavigateToCreateUser()
+    {
+        _navigationManager.NavigateTo("/CreateUser");
+    }
+}
