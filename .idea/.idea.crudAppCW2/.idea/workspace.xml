@@ -7,23 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f8cdaa88-c30e-4229-be83-2cf0d05911bb" name="Changes" comment="add page title">
-      <change afterPath="$PROJECT_DIR$/crudAppCW2/Data/crudAppDb.sqlite-shm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crudAppCW2/Data/crudAppDb.sqlite-wal" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.crudAppCW2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.crudAppCW2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/wwwroot/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/Data/AppDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Data/AppDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Models/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/Pages/CreateUser.razor" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Pages/CreateUser.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/Pages/Users.razor" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Pages/Users.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/Pages/_Host.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Pages/_Host.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/bin/Debug/net7.0/crudAppCW2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/bin/Debug/net7.0/crudAppCW2.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/bin/Debug/net7.0/crudAppCW2.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/bin/Debug/net7.0/crudAppCW2.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/crudAppCW2.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/crudAppCW2.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/obj/Debug/net7.0/crudAppCW2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/obj/Debug/net7.0/crudAppCW2.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/obj/Debug/net7.0/crudAppCW2.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/obj/Debug/net7.0/crudAppCW2.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/obj/Debug/net7.0/ref/crudAppCW2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/obj/Debug/net7.0/ref/crudAppCW2.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/obj/Debug/net7.0/refint/crudAppCW2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/obj/Debug/net7.0/refint/crudAppCW2.dll" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +114,7 @@
       <workItem from="1676915930090" duration="842000" />
       <workItem from="1676916948017" duration="3998000" />
       <workItem from="1677107349733" duration="352000" />
-      <workItem from="1677107717238" duration="9256000" />
+      <workItem from="1677107717238" duration="10224000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1676914586021</created>
