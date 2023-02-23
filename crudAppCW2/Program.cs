@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddDbContext<AppDbContext>(
+builder.Services.AddDbContextFactory<AppDbContext>(
      opt => opt.UseSqlite(
          builder.Configuration.GetConnectionString("DefaultConnection")));
 var app = builder.Build();

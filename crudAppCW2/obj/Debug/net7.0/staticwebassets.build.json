@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "WkqFc9ZeZgptv7qnjiOenRSR/VkqYvSu8/Q80zEKddY=",
+  "Hash": "xPxgUrlfDzOOrCLcQ812DfehndTPh7sXJ5NiaXBvrMI=",
   "Source": "crudAppCW2",
   "BasePath": "_content/crudAppCW2",
   "Mode": "Default",
@@ -49,6 +49,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\cwhitelam\\crudAppCW\\crudAppCW2\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\crudAppCW2.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Users\\cwhitelam\\crudAppCW\\crudAppCW2\\wwwroot\\.gitignore",
+      "SourceId": "crudAppCW2",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\cwhitelam\\crudAppCW\\crudAppCW2\\wwwroot\\",
+      "BasePath": "_content/crudAppCW2",
+      "RelativePath": ".gitignore",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\.gitignore"
     },
     {
       "Identity": "C:\\Users\\cwhitelam\\crudAppCW\\crudAppCW2\\wwwroot\\css\\bootstrap\\bootstrap.min.css",

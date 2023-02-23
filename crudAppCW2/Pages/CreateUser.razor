@@ -1,40 +1,119 @@
 ﻿@page "/CreateUser"
 @using Microsoft.AspNetCore.Components
 @using crudAppCW2.Models
+@using crudAppCW2.Data
+@using Microsoft.EntityFrameworkCore
+@inject IDbContextFactory<AppDbContext> ContextFactory
+
 
 <PageTitle>Create User</PageTitle>
 
 <h3>CreateUser</h3>
 
-<EditForm Model="@user">
-    <InputText @bind-Value="user.Name" placeholder="Name" class="form-control" style="width: 450px;"/>
-    <ValidationMessage For="@(() => user.Name)"/>
-    
-    <InputText @bind-Value="user.Email" placeholder="Email" class="form-control" style="width: 450px;"/>
-    <ValidationMessage For="@(() => user.Email)"/>
-    
-        <label for="users">Choose a Role:</label>
-        <select @bind="user.RoleId" class="form-control" style="width: 200px;">
-            <option value="Admin">Admin</option>
-            <option value="User">User</option>
-        </select>
-        <br/>
-        <button class="btn btn-primary" @onclick="CreateUsers">Add This User</button>
+<EditForm Model="@User" OnValidSubmit="@HandleValidSubmit"
+          OnInvalidSubmit="@HandleInvalidSubmit">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+
+    <InputText @bind-Value="User.FirstName" placeholder="First Name" class="form-control" style="width: 450px;"/>
+    <ValidationMessage For="@(() => User.FirstName)"/>
+
+    <InputText @bind-Value="User.LastName" placeholder="Last Name" class="form-control" style="width: 450px;"/>
+    <ValidationMessage For="@(() => User.LastName)"/>
+
+    <InputText @bind-Value="User.Email" placeholder="Email" class="form-control" style="width: 450px;"/>
+    <ValidationMessage For="@(() => User.Email)"/>
+
+    <label for="users">Choose a Role:</label>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Select a role
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <select @bind="User.RoleId" class="form-control" style="width: 200px;">
+                <option value="Admin">Admin</option>
+                <option value="User">User</option>
+            </select>
+        </div>
+    </div>
+
+    <br/>
+    <button class="btn btn-primary" @onclick="CreateUsers">Add This User</button>
 </EditForm>
 
 
-
-
-
 @code {
-    private User user = new User();
+    private User? User = new User();
+
+    private bool IsBusy { get; set; }
+
+    private string? SuccessMessage { get; set; }
+
+    private string? ErrorMessage { get; set; }
 
     [Inject]
     private NavigationManager _navigationManager { get; set; }
 
-    private async Task CreateUsers()
+    private async Task HandleSubmit(bool isValid)
+    {
+        if (isValid)
+        {
+            await HandleValidSubmit();
+        }
+        else
+        {
+            HandleInvalidSubmit();
+        }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        if (IsBusy)
+        {
+            return;
+        }
+
+        IsBusy = true;
+
+        try
+        {
+            if (User is not null)
+            {
+                await using var context = await ContextFactory.CreateDbContextAsync();
+
+                context.Users.Add(User);
+                await context.SaveChangesAsync();
+
+                SuccessMessage = $"Employee {User.FirstName} {User.LastName} was added successfully.";
+                ErrorMessage = null;
+
+    // New Employee for next creation
+                User = new User
+                {
+                    RoleId = User.RoleId
+                };
+            }
+        }
+        catch (Exception ex)
+        {
+            SuccessMessage = null;
+            ErrorMessage = $"Error while adding employee: {ex.Message}";
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    private void CreateUsers()
     {
         _navigationManager.NavigateTo("/Users");
+    }
+
+    private void HandleInvalidSubmit()
+    {
+        SuccessMessage = null;
+        ErrorMessage = null;
     }
 
 }

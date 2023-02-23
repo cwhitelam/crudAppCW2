@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\crudAppCW2.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\cwhitelam\\crudAppCW\\crudAppCW2\\wwwroot\\.gitignore",
+      "PackagePath": "staticwebassets\\.gitignore"
+    },
+    {
       "Id": "C:\\Users\\cwhitelam\\crudAppCW\\crudAppCW2\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
     },

@@ -23,7 +23,8 @@ else
             @foreach (var user in UsersTable)
             {
                 <tr>
-                    <td>@user.Name</td>
+                    <td>@user.FirstName</td>
+                    <td>@user.LastName</td>
                     <td>@user.Email</td>
                     <td>@user.RoleId</td>
                 </tr>
@@ -51,9 +52,10 @@ else
         {
             var item = new User();
             item.Id = i;
-            item.Name = "";
+            item.FirstName = "";
+            item.LastName = "";
             item.Email = "";
-            item.RoleId = "";
+            item.RoleId = 0;
             UsersTable.Add(item);
         }
     }
