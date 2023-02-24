@@ -1,5 +1,9 @@
 ﻿@page "/Users"
 @using crudAppCW2.Models
+@using crudAppCW2.Data
+@using Microsoft.EntityFrameworkCore
+@inject IDbContextFactory<AppDbContext> ContextFactory
+
 
 <PageTitle>Users</PageTitle>
 
@@ -13,22 +17,24 @@ else
 {
     <table class="table">
         <thead>
-            <tr>
-                <th>User</th>
-                <th>Email</th>
-                <th>Role</th>
-            </tr>
+        <tr>
+            <th>User</th>
+            <th>Email</th>
+            <th>Role</th>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var user in UsersTable)
-            {
-                <tr>
-                    <td>@user.FirstName</td>
-                    <td>@user.LastName</td>
-                    <td>@user.Email</td>
-                    <td>@user.RoleId</td>
-                </tr>
-            }
+        @foreach (var User in UsersTable)
+        {
+            <tr>
+                <td>@User.FirstName @User.LastName</td>
+                <td>@User.Email</td>
+                <td>@User.RoleId</td>
+                <td>
+                    <button class="btn btn-danger" @onclick="(() => DeleteUser(User.Id))">Delete</button>
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 }
@@ -36,32 +42,30 @@ else
 <button class="btn btn-success" @onclick="NavigateToCreateUser">Create User</button>
 
 
-
-
-
 @code {
     private List<User> UsersTable { get; set; }
-    
+
     [Inject]
     private NavigationManager _navigationManager { get; set; }
-    
+
     protected override async Task OnInitializedAsync()
     {
-        UsersTable = new List<User>();
-        for (int i = 1; i <= 5; i++)
-        {
-            var item = new User();
-            item.Id = i;
-            item.FirstName = "";
-            item.LastName = "";
-            item.Email = "";
-            item.RoleId = 0;
-            UsersTable.Add(item);
-        }
+        await using var context = await ContextFactory.CreateDbContextAsync();
+        UsersTable = await context.Users.ToListAsync();
     }
-    
+
     private void NavigateToCreateUser()
     {
         _navigationManager.NavigateTo("/CreateUser");
     }
+
+    private void DeleteUser(int id)
+    {
+        var userToDelete = UsersTable.FirstOrDefault(u => u.Id == id);
+        if (userToDelete != null)
+        {
+            UsersTable.Remove(userToDelete);
+        }
+    }
+
 }
