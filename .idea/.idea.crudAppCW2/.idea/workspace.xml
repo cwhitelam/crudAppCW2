@@ -6,17 +6,9 @@
     <projectFile profileName="https">crudAppCW2/crudAppCW2.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f8cdaa88-c30e-4229-be83-2cf0d05911bb" name="Changes" comment="initial commit">
-      <change afterPath="$PROJECT_DIR$/crudAppCW2/Migrations/20230223033121_InitialCreate2.Designer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crudAppCW2/Migrations/20230223033121_InitialCreate2.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crudAppCW2/Migrations/20230223033841_SeedDatabase.Designer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crudAppCW2/Migrations/20230223033841_SeedDatabase.cs" afterDir="false" />
+    <list default="true" id="f8cdaa88-c30e-4229-be83-2cf0d05911bb" name="Changes" comment="reg commits">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.crudAppCW2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.crudAppCW2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/Data/crudAppDb.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Data/crudAppDb.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/Data/crudAppDb.sqlite-shm" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Data/crudAppDb.sqlite-shm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crudAppCW2/Data/crudAppDb.sqlite-wal" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Data/crudAppDb.sqlite-wal" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/Migrations/AppDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Migrations/AppDbContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/Pages/CreateUser.razor" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Pages/CreateUser.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crudAppCW2/Pages/Users.razor" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Pages/Users.razor" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -27,9 +19,12 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Data/AppDbContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Migrations/20230220184638_InitialCreate.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Migrations/AppDbContextModelSnapshot.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/CreateUser.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/CreateUser.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/CreateUser.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/CreateUser.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/Users.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/Users.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/crudAppCW2/Pages/_Host.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Program.cs" root0="SKIP_HIGHLIGHTING" />
@@ -130,7 +125,7 @@
       <workItem from="1676915930090" duration="842000" />
       <workItem from="1676916948017" duration="3998000" />
       <workItem from="1677107349733" duration="352000" />
-      <workItem from="1677107717238" duration="18788000" />
+      <workItem from="1677107717238" duration="22189000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1676914586021</created>
@@ -244,7 +239,35 @@
       <option name="project" value="LOCAL" />
       <updated>1677121929199</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="restructured form components">
+      <created>1677203551401</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1677203551401</updated>
+    </task>
+    <task id="LOCAL-00018" summary="connected users homepage with sqlite data">
+      <created>1677203595265</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1677203595265</updated>
+    </task>
+    <task id="LOCAL-00019" summary="seeded database">
+      <created>1677203626942</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1677203626942</updated>
+    </task>
+    <task id="LOCAL-00020" summary="reg commits">
+      <created>1677203640438</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1677203640438</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -280,14 +303,18 @@
     <MESSAGE value="add LastName option" />
     <MESSAGE value="add OnModelCreating" />
     <MESSAGE value="initial commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="initial commit" />
+    <MESSAGE value="restructured form components" />
+    <MESSAGE value="connected users homepage with sqlite data" />
+    <MESSAGE value="seeded database" />
+    <MESSAGE value="reg commits" />
+    <option name="LAST_COMMIT_MESSAGE" value="reg commits" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/crudAppCW2/Pages/Users.razor</url>
-          <line>26</line>
+          <line>27</line>
           <properties documentPath="C:\Users\cwhitelam\crudAppCW\crudAppCW2\Pages\Users.razor" initialLine="23" isMultiMethodBreakpoint="true">
             <option name="multiMethodBreakpoint" value="true" />
             <startOffsets>
