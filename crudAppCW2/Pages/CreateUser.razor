@@ -10,26 +10,36 @@
 
 <h3>CreateUser</h3>
 
-<EditForm Model="@User" OnValidSubmit="@HandleValidSubmit"
-          OnInvalidSubmit="@HandleInvalidSubmit">
+<EditForm Model="@User" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
     <DataAnnotationsValidator/>
     <ValidationSummary/>
 
-    <InputText @bind-Value="User.FirstName" placeholder="First Name" class="form-control" style="width: 450px;"/>
-    <ValidationMessage For="@(() => User.FirstName)"/>
+    <div class="form-group">
+        <label for="firstName">First Name:</label>
+        <InputText @bind-Value="User.FirstName" placeholder="First Name" class="form-control" style="width: 450px;"/>
+        <ValidationMessage For="@(() => User.FirstName)"/>
+    </div>
 
-    <InputText @bind-Value="User.LastName" placeholder="Last Name" class="form-control" style="width: 450px;"/>
-    <ValidationMessage For="@(() => User.LastName)"/>
+    <div class="form-group">
+        <label for="lastName">Last Name:</label>
+        <InputText @bind-Value="User.LastName" placeholder="Last Name" class="form-control" style="width: 450px;"/>
+        <ValidationMessage For="@(() => User.LastName)"/>
+    </div>
 
-    <InputText @bind-Value="User.Email" placeholder="Email" class="form-control" style="width: 450px;"/>
-    <ValidationMessage For="@(() => User.Email)"/>
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <InputText @bind-Value="User.Email" placeholder="Email" class="form-control" style="width: 450px;"/>
+        <ValidationMessage For="@(() => User.Email)"/>
+    </div>
 
-    <label for="users">Choose a Role:</label>
-    <select @bind="User.RoleId" class="form-control" style="width: 200px;">
-        <option value="Admin">Admin</option>
-        <option value="User">User</option>
-    </select>
-    <br/>
+    <div class="form-group">
+        <label for="role">Choose a Role:</label>
+        <select @bind="User.RoleId" class="form-select" style="width: 200px;">
+            <option value="Admin">Admin</option>
+            <option value="User">User</option>
+        </select>
+    </div>
+
     <button class="btn btn-primary" @onclick="CreateUsers">Add This User</button>
 </EditForm>
 
