@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using crudAppCW2.Data.Models;
 
 namespace crudAppCW2.Models;
 
@@ -17,5 +18,9 @@ public class User
         public string Email { get; set; }
 
         public int? RoleId { get; set; }
+        public ICollection<UserDepartment> UserDepartments { get; set; }
+
+        
+        
     }
     
