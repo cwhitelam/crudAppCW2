@@ -30,8 +30,8 @@ else
             <tr>
                 <td>@User.FirstName @User.LastName</td>
                 <td>@User.Email</td>
-                <td>@User.RoleId</td>
-                <td>@User.RoleId</td>
+                <td>@User.Role?.Name</td>
+                <td>@User.Department?.Name</td>
                 <td>
                     <button class="btn btn-danger" @onclick="(() => DeleteUser(User.Id))">Delete</button>
                     <button class="btn btn-primary" @onclick="(() => EditUser(User.Id))">Edit</button>
@@ -55,7 +55,10 @@ else
     protected override async Task OnInitializedAsync()
     {
         await using var context = await ContextFactory.CreateDbContextAsync();
-        UsersTable = await context.Users.ToListAsync();
+        UsersTable = await context.User
+                                  .Include(x => x.Department)
+                                  .Include(x => x.Role)
+                                  .ToListAsync();
     }
 
     private void NavigateToCreateUser()
@@ -77,7 +80,7 @@ else
         var userToEdit = UsersTable.FirstOrDefault(u => u.Id == id);
         if (userToEdit != null)
         {
-            _navigationManager.NavigateTo($"/CreateUser");
+            _navigationManager.NavigateTo($"/EditUser/{userToEdit.Id}");
         }
     }
 
