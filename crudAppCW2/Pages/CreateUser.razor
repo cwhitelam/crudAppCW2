@@ -1,7 +1,8 @@
 ﻿@page "/CreateUser"
 @using Microsoft.AspNetCore.Components
-@using crudAppCW2.Models
 @using crudAppCW2.Data
+@using crudAppCW2.Data.Models
+@using crudAppCW2.Models
 @using Microsoft.EntityFrameworkCore
 @inject IDbContextFactory<AppDbContext> ContextFactory
 
@@ -32,20 +33,35 @@
         <ValidationMessage For="@(() => User.Email)"/>
     </div>
 
-    <div class="form-group">
-        <label for="role">Choose a Role:</label>
-        <select @bind="User.RoleId" class="form-select" style="width: 200px;">
-            <option value="Admin">Admin</option>
-            <option value="User">User</option>
-        </select>
+    <div class="form-group d-flex">
+        <div class="mr-4">
+            <label for="role1">Choose Role:</label>
+            <select @bind="User.RoleId" class="form-select" style="width: 160px;">
+                <option value="1">Admin</option>
+                <option value="2">User</option>
+            </select>
+        </div>
+        
+        <div>
+            <label for="role2">Choose Department:</label>
+            <select @bind="User.DepartmentId" class="form-select" style="width: 290px;">
+                <option value="1">Commercial</option>
+                <option value="2">Golf Course</option>
+                <option value="3">Maintenance</option>
+                <option value="4">IT</option>
+                <option value="5">Admin</option>
+                </select>
+        </div>
     </div>
-
+    <br/>
     <button class="btn btn-primary" @onclick="CreateUsers">Add This User</button>
 </EditForm>
 
 
 @code {
     private User? User = new User();
+    
+    private Role? Role = new Role();
 
     private bool IsBusy { get; set; }
 
@@ -82,8 +98,8 @@
             if (User is not null)
             {
                 await using var context = await ContextFactory.CreateDbContextAsync();
-
-                context.Users.Add(User);
+                
+                context.User.Add(User);
                 await context.SaveChangesAsync();
 
                 SuccessMessage = $"Employee {User.FirstName} {User.LastName} was added successfully.";
@@ -106,6 +122,7 @@
             IsBusy = false;
         }
     }
+
 
     private void CreateUsers()
     {
