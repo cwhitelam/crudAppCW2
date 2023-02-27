@@ -2,12 +2,12 @@ using crudAppCW2.Models;
 
 namespace crudAppCW2.Data.Models
 {
-    public class UserDepartment
+    public class UserRole
     {
         public int UserId { get; set; }
         public User User { get; set; }
 
-        public int DepartmentId { get; set; }
-        public Department Department { get; set; }
+        public int RoleId { get; set; }
+        public Role Role { get; set; }
     }
 }
