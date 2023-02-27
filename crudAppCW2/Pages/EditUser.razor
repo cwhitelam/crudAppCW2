@@ -1,0 +1,77 @@
+@page "/EditUser/{id:int}"
+@using crudAppCW2.Models
+@using crudAppCW2.Data
+@using crudAppCW2.Data.Models
+@using Microsoft.EntityFrameworkCore
+@inject IDbContextFactory<AppDbContext> ContextFactory
+
+<PageTitle>Edit User</PageTitle>
+
+<h3>Edit User</h3>
+<form>
+    <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input type="text" class="form-control" id="firstName" @bind="User.FirstName"/>
+    </div>
+    <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input type="text" class="form-control" id="lastName" @bind="User.LastName"/>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" @bind="User.Email"/>
+    </div>
+    <div class="form-group">
+        <label for="department">Department</label>
+        <select class="form-control" id="department" @bind="User.DepartmentId">
+            <option value="">Select a department</option>
+            @foreach (var department in Departments)
+            {
+                <option value="@department.Id">@department.Name</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="role">Role</label>
+        <select class="form-control" id="role" @bind="User.RoleId">
+            <option value="">Select a role</option>
+            @foreach (var role in Roles)
+            {
+                <option value="@role.Id">@role.Name</option>
+            }
+        </select>
+    </div>
+    <button class="btn btn-primary" @onclick="UpdateUser">Update</button>
+</form>
+
+@code {
+    private User? User { get; set; }
+    private List<Department>? Departments { get; set; }
+    private List<Role>? Roles { get; set; }
+
+    [Parameter]
+    public int Id { get; set; }
+
+    [Inject]
+    private NavigationManager _navigationManager { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await using var context = await ContextFactory.CreateDbContextAsync();
+        User = await context.User
+            .Include(navigationPropertyPath: x => x.Department)
+            .Include(navigationPropertyPath: x => x.Role)
+            .FirstOrDefaultAsync(predicate: x => x.Id == Id);
+        Departments = await context.Department.ToListAsync();
+        Roles = await context.Role.ToListAsync();
+    }
+
+    private async void UpdateUser()
+    {
+        await using var context = await ContextFactory.CreateDbContextAsync();
+        context.User.Update(entity: User);
+        await context.SaveChangesAsync();
+        _navigationManager.NavigateTo(uri: "/Users");
+    }
+
+}
