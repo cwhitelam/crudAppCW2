@@ -29,29 +29,53 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        
-        modelBuilder.Entity<Role>().HasData(
-            new Role {Id = 1, Name = "Admin" },
-            new Role {Id = 2, Name = "User" });
 
-        modelBuilder.Entity<Department>().HasData(
-            new Department { Id = 1, Name = "Commercial" },
-            new Department { Id = 2, Name = "Golf Course" },
-            new Department { Id = 3, Name = "Maintenance" },
-            new Department { Id = 4, Name = "IT" },
-            new Department { Id = 5, Name = "Admin" });
+        // Configure User entity
+        modelBuilder.Entity<User>()
+            .HasKey(u => u.Id);
+        modelBuilder.Entity<User>()
+            .Property(u => u.FirstName)
+            .IsRequired();
+        modelBuilder.Entity<User>()
+            .Property(u => u.LastName)
+            .IsRequired();
+        modelBuilder.Entity<User>()
+            .Property(u => u.Email)
+            .IsRequired();
+        modelBuilder.Entity<User>()
+            .Property(u => u.RoleId)
+            .IsRequired(false);
+        modelBuilder.Entity<User>()
+            .Property(u => u.DepartmentId)
+            .IsRequired(false);
+
+
+        // Configure Role entity
+        modelBuilder.Entity<Role>()
+            .HasKey(r => r.Id);
+        modelBuilder.Entity<Role>()
+            .Property(r => r.Name)
+            .IsRequired();
+
+        // Configure Department entity
+        modelBuilder.Entity<Department>()
+            .HasKey(d => d.Id);
+        modelBuilder.Entity<Department>()
+            .Property(d => d.Name)
+            .IsRequired();
+
+        // Configure UserRole entity
+        modelBuilder.Entity<UserRole>()
+            .HasKey(ur => new { ur.UserId, ur.RoleId });
 
         modelBuilder.Entity<UserRole>()
-            .HasKey(ud => new { ud.UserId, DepartmentId = ud.RoleId });
-
-        modelBuilder.Entity<UserRole>()
-            .HasOne(ud => ud.User)
+            .HasOne(ur => ur.User)
             .WithMany(u => u.UserRoles)
-            .HasForeignKey(ud => ud.UserId);
+            .HasForeignKey(ur => ur.UserId);
 
         modelBuilder.Entity<UserRole>()
-            .HasOne(ud => ud.Role)
-            .WithMany(d => d.UserRoles)
-            .HasForeignKey(ud => ud.RoleId);
+            .HasOne(ur => ur.Role)
+            .WithMany(r => r.UserRoles)
+            .HasForeignKey(ur => ur.RoleId);
     }
 }
