@@ -41,7 +41,7 @@
                 <option value="2">User</option>
             </select>
         </div>
-        
+
         <div>
             <label for="role2">Choose Department:</label>
             <select @bind="User.DepartmentId" class="form-select" style="width: 290px;">
@@ -50,17 +50,19 @@
                 <option value="3">Maintenance</option>
                 <option value="4">IT</option>
                 <option value="5">Admin</option>
-                </select>
+            </select>
         </div>
     </div>
     <br/>
-    <button class="btn btn-primary" @onclick="CreateUsers">Add This User</button>
+    <button class="btn btn-primary" type="submit">Add This User</button>
+    <button class="btn btn-secondary" @onclick="CreateUsers">Back</button>
+
 </EditForm>
 
 
 @code {
-    private User? User = new User();
-    
+    private User? User = new User() { RoleId = 1 };
+
     private Role? Role = new Role();
 
     private bool IsBusy { get; set; }
@@ -97,25 +99,28 @@
         {
             if (User is not null)
             {
+                User.RoleId = User.RoleId; // Set RoleId
+                User.DepartmentId = User.DepartmentId; // Set DepartmentId
+
                 await using var context = await ContextFactory.CreateDbContextAsync();
-                
+
                 context.User.Add(User);
                 await context.SaveChangesAsync();
 
-                SuccessMessage = $"Employee {User.FirstName} {User.LastName} was added successfully.";
+                SuccessMessage = $"User {User.FirstName} {User.LastName} was added successfully.";
                 ErrorMessage = null;
 
-    // New Employee for next creation
-                User = new User
+    // Reset User object for next creation
+                User = new User()
                 {
-                    RoleId = User.RoleId
+                    RoleId = 1
                 };
             }
         }
         catch (Exception ex)
         {
             SuccessMessage = null;
-            ErrorMessage = $"Error while adding employee: {ex.Message}";
+            ErrorMessage = $"Error while adding user: {ex.Message}";
         }
         finally
         {
