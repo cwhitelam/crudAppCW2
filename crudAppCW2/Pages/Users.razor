@@ -4,7 +4,6 @@
 @using Microsoft.EntityFrameworkCore
 @inject IDbContextFactory<AppDbContext> ContextFactory
 
-
 <PageTitle>Users</PageTitle>
 
 <h3>Users</h3>
@@ -30,8 +29,14 @@ else
             <tr>
                 <td>@User.FirstName @User.LastName</td>
                 <td>@User.Email</td>
-                <td>@User.Role?.Name</td>
-                <td>@User.Department?.Name</td>
+                <td>@(User.RoleId == 1 ? "Admin" : "User")</td>
+                <td>
+                    @(User.DepartmentId == 1 ? "Commercial" :
+                        User.DepartmentId == 2 ? "Golf Course" :
+                            User.DepartmentId == 3 ? "Maintenance" :
+                                User.DepartmentId == 4 ? "IT" :
+                                    "Engineering")
+                </td>
                 <td>
                     <button class="btn btn-danger" @onclick="(() => DeleteUser(User.Id))">Delete</button>
                     <button class="btn btn-primary" @onclick="(() => EditUser(User.Id))">Edit</button>
@@ -40,48 +45,105 @@ else
         }
         </tbody>
     </table>
-}
-<td>
-    <button class="btn btn-success" @onclick="NavigateToCreateUser">Create User</button>
-</td>
 
+    <ul class="pagination mt-3">
+        <li class="page-item @(CurrentPage == 1 ? "disabled" : "")">
+            <button class="page-link" disabled="@IsPrevDisabled" @onclick="LoadPrevPage">Previous</button>
+        </li>
+        @for (int i = 1; i <= TotalPages; i++)
+        {
+            <li class="page-item @(CurrentPage == i ? "active" : "")">
+                <button class="page-link" @onclick="(() => OnPageChanged(i))">@i</button>
+            </li>
+        }
+        <li class="page-item @(CurrentPage == TotalPages ? "disabled" : "")">
+            <button class="page-link" disabled="@IsNextDisabled" @onclick="LoadNextPage">Next</button>
+        </li>
+    </ul>
+
+    <br/>
+    <td>
+        <button class="btn btn-success" @onclick="NavigateToCreateUser">Create User</button>
+    </td>
+}
 
 @code {
     private List<User> UsersTable { get; set; }
+    private List<User> PagedUsers { get; set; } = new List<User>();
+    private int PageSize { get; set; } = 4;
+    private int CurrentPage { get; set; } = 1;
+    private bool IsPrevDisabled => CurrentPage == 1;
+    private bool IsNextDisabled => (CurrentPage * PageSize) >= UsersTable.Count;
+    private int TotalPages => (int)Math.Ceiling((double)UsersTable.Count / PageSize);
+
 
     [Inject]
-    private NavigationManager _navigationManager { get; set; }
+    private NavigationManager NavigationManager { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        await using var context = await ContextFactory.CreateDbContextAsync();
+        await LoadData();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        await using var context = ContextFactory.CreateDbContext();
         UsersTable = await context.User
-                                  .Include(x => x.Department)
-                                  .Include(x => x.Role)
-                                  .ToListAsync();
+            .Include(x => x.Department)
+            .Include(x => x.Role)
+            .ToListAsync();
+        LoadPage();
+    }
+
+    private void LoadPage()
+    {
+        PagedUsers = UsersTable.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
+    }
+
+    private void LoadPrevPage()
+    {
+        CurrentPage--;
+        LoadPage();
+    }
+
+    private void LoadNextPage()
+    {
+        CurrentPage++;
+        LoadPage();
     }
 
     private void NavigateToCreateUser()
     {
-        _navigationManager.NavigateTo("/CreateUser");
+        NavigationManager.NavigateTo("/CreateUser");
     }
 
-    private void DeleteUser(int id)
+    private async void DeleteUser(int id)
     {
-        var userToDelete = UsersTable.FirstOrDefault(u => u.Id == id);
+        await using var context = ContextFactory.CreateDbContext();
+        var userToDelete = await context.User.FirstOrDefaultAsync(u => u.Id == id);
         if (userToDelete != null)
         {
-            UsersTable.Remove(userToDelete);
+            context.User.Remove(userToDelete);
+            await context.SaveChangesAsync();
+            await LoadData();
         }
     }
 
     private void EditUser(int id)
     {
-        var userToEdit = UsersTable.FirstOrDefault(u => u.Id == id);
-        if (userToEdit != null)
-        {
-            _navigationManager.NavigateTo($"/EditUser/{userToEdit.Id}");
-        }
+        NavigationManager.NavigateTo($"/EditUser/{id}");
     }
+
+    private async Task OnPageChanged(int page)
+    {
+        CurrentPage = page;
+        LoadPage();
+    }
+
 
 }
