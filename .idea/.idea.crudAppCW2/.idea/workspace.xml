@@ -6,18 +6,7 @@
     <projectFile profileName="https">crudAppCW2/crudAppCW2.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f8cdaa88-c30e-4229-be83-2cf0d05911bb" name="Changes" comment="commit updates">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.crudAppCW2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.crudAppCW2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/Data/AppDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Data/AppDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/Data/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Data/Models/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/Data/WeatherForecast.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/Data/WeatherForecastService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/Data/crudAppDb.sqlite-wal" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Data/crudAppDb.sqlite-wal" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/Pages/CreateUser.razor" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Pages/CreateUser.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/Pages/EditUser.razor" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Pages/EditUser.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/Pages/FetchData.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/Pages/Users.razor" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Pages/Users.razor" afterDir="false" />
-    </list>
+    <list default="true" id="f8cdaa88-c30e-4229-be83-2cf0d05911bb" name="Changes" comment="commit" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,8 +19,10 @@
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Data/AppDbContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Data/AppDbContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Data/AppDbContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Data/AppDbContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Data/Models/Department.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Data/Models/Department.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Data/Models/User.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Data/Models/User.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Data/Models/User.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Migrations/20230220184638_InitialCreate.cs" root0="SKIP_HIGHLIGHTING" />
@@ -43,7 +34,10 @@
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/CreateUser.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/CreateUser.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/CreateUser.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/CreateUser.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/EditUser.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/Index.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/Users.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/Users.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/Users.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/Users.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
@@ -149,7 +143,7 @@
       <workItem from="1676915930090" duration="842000" />
       <workItem from="1676916948017" duration="3998000" />
       <workItem from="1677107349733" duration="352000" />
-      <workItem from="1677107717238" duration="62145000" />
+      <workItem from="1677107717238" duration="62513000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1676914586021</created>
@@ -410,7 +404,56 @@
       <option name="project" value="LOCAL" />
       <updated>1677536843626</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="changed entities for config">
+      <created>1677716128162</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1677716128162</updated>
+    </task>
+    <task id="LOCAL-00039" summary="add 'Back' button to return to Users.razor">
+      <created>1677716168458</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1677716168459</updated>
+    </task>
+    <task id="LOCAL-00040" summary="EditUser still wont update form values, needs debug">
+      <created>1677716213138</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1677716213138</updated>
+    </task>
+    <task id="LOCAL-00041" summary="delete">
+      <created>1677716226566</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1677716226566</updated>
+    </task>
+    <task id="LOCAL-00042" summary="no commit">
+      <created>1677716248510</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1677716248510</updated>
+    </task>
+    <task id="LOCAL-00043" summary="fixed Role and Dept value visual on Table&#10;added pagination to show 4 values @ time">
+      <created>1677716319920</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1677716319920</updated>
+    </task>
+    <task id="LOCAL-00044" summary="commit">
+      <created>1677716328169</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1677716328169</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -432,12 +475,6 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="create Department.cs for organization of roles" />
-    <MESSAGE value="add EnsureDatabaseIsMigrated" />
-    <MESSAGE value="add LastName option" />
-    <MESSAGE value="add OnModelCreating" />
-    <MESSAGE value="initial commit" />
-    <MESSAGE value="restructured form components" />
     <MESSAGE value="connected users homepage with sqlite data" />
     <MESSAGE value="seeded database" />
     <MESSAGE value="reg commits" />
@@ -446,7 +483,6 @@
     <MESSAGE value="added UserDepartment.cs" />
     <MESSAGE value="condensed 'edit|delete' buttons" />
     <MESSAGE value="updated UserDepartment collection" />
-    <MESSAGE value="commit" />
     <MESSAGE value="created|updated UserDepartment Table" />
     <MESSAGE value="created|migrated UserDepartment Table" />
     <MESSAGE value="updated tables" />
@@ -457,7 +493,14 @@
     <MESSAGE value="add Role.cs" />
     <MESSAGE value="renamed to UserRole.cs" />
     <MESSAGE value="commit updates" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit updates" />
+    <MESSAGE value="changed entities for config" />
+    <MESSAGE value="add 'Back' button to return to Users.razor" />
+    <MESSAGE value="EditUser still wont update form values, needs debug" />
+    <MESSAGE value="delete" />
+    <MESSAGE value="no commit" />
+    <MESSAGE value="fixed Role and Dept value visual on Table&#10;added pagination to show 4 values @ time" />
+    <MESSAGE value="commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
