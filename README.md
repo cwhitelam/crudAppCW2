@@ -10,6 +10,7 @@ To get started with this project, follow these steps:
 3. Run the project using the built-in web server.
 
 <h2>Features</h2>
+
 This application allows you to perform the following operations:
 
 - Create new users with a first name, last name, email address, role, and department.
@@ -18,6 +19,7 @@ This application allows you to perform the following operations:
 - Delete a user from the list.
 
 <h2>Technologies Used</h2>
+
 This project was built using the following technologies:
 
 - Blazor WebAssembly
