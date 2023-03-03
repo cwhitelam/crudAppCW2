@@ -63,6 +63,18 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Department>()
             .Property(d => d.Name)
             .IsRequired();
+        modelBuilder.Entity<Department>().HasData(
+            new Department { Id = 1, Name = "Admin" },
+            new Department { Id = 2, Name = "Commercial" },
+            new Department { Id = 3, Name = "Engineering" },
+            new Department { Id = 4, Name = "Fabrication" },
+            new Department { Id = 5, Name = "Golf Course" },
+            new Department { Id = 6, Name = "Human Resources" },
+            new Department { Id = 7, Name = "IT" },
+            new Department { Id = 8, Name = "Maintenance" },
+            new Department { Id = 9, Name = "Sales" },
+            new Department { Id = 10, Name = "Superior Walls" }
+        );
 
         // Configure UserRole entity
         modelBuilder.Entity<UserRole>()
