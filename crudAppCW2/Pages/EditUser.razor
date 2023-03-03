@@ -7,7 +7,7 @@
 
 <PageTitle>Edit User</PageTitle>
 
-<h3>Edit User</h3>
+<h3>Edit User Info</h3>
 <form>
     <div class="form-group">
         <label for="firstName">First Name</label>
@@ -33,15 +33,20 @@
         <div>
             <label for="role2">Choose Department:</label>
             <select @bind="User.DepartmentId" class="form-select" style="width: 290px;">
-                <option value="1">Commercial</option>
-                <option value="2">Golf Course</option>
-                <option value="3">Maintenance</option>
-                <option value="4">IT</option>
-                <option value="5">Admin</option>
+                <option value="1">Admin</option>
+                <option value="2">Commercial</option>
+                <option value="3">Engineering</option>
+                <option value="4">Fabrication</option>
+                <option value="5">Golf Course</option>
+                <option value="6">Human Resources</option>
+                <option value="7">IT</option>
+                <option value="8">Maintenance</option>
+                <option value="9">Sales</option>
+                <option value="10">Superior Walls</option>
             </select>
         </div>
     </div>
-
+    <br/>
     <button class="btn btn-primary" @onclick="UpdateUser">Update</button>
 </form>
 
