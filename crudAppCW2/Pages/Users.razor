@@ -27,22 +27,30 @@ else
         @foreach (var User in UsersTable)
         {
             <tr>
-                <td>@User.FirstName @User.LastName</td>
+                <td>@User.GetCapitalizedString(User.FirstName) @User.GetCapitalizedString(User.LastName)</td>
                 <td>@User.Email</td>
                 <td>@(User.RoleId == 1 ? "Admin" : "User")</td>
                 <td>
-                    @(User.DepartmentId == 1 ? "Commercial" :
-                        User.DepartmentId == 2 ? "Golf Course" :
-                            User.DepartmentId == 3 ? "Maintenance" :
-                                User.DepartmentId == 4 ? "IT" :
-                                    "Engineering")
+                    @(User.DepartmentId == 1 ? "Admin" :
+                        User.DepartmentId == 2 ? "Commercial" :
+                            User.DepartmentId == 3 ? "Engineering" :
+                                User.DepartmentId == 4 ? "Fabrication" :
+                                    User.DepartmentId == 5 ? "Golf Course" :
+                                        User.DepartmentId == 6 ? "Human Resources" :
+                                            User.DepartmentId == 7 ? "IT" :
+                                                User.DepartmentId == 8 ? "Maintenance" :
+                                                    User.DepartmentId == 9 ? "Sales" :
+                                                        User.DepartmentId == 10 ? "Superior Walls" :
+                                                            "Admin")
                 </td>
+
                 <td>
                     <button class="btn btn-danger" @onclick="(() => DeleteUser(User.Id))">Delete</button>
                     <button class="btn btn-primary" @onclick="(() => EditUser(User.Id))">Edit</button>
                 </td>
             </tr>
         }
+
         </tbody>
     </table>
 

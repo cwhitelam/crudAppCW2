@@ -17,4 +17,19 @@ public class User
     public Department? Department { get; set; }
     public Role? Role { get; set; }
     public ICollection<UserRole> UserRoles { get; set; }
+    public string GetCapitalizedString(string str)
+    {
+        if (string.IsNullOrEmpty(str))
+        {
+            return str;
+        }
+
+        var words = str.Split(' ');
+        for (int i = 0; i < words.Length; i++)
+        {
+            words[i] = words[i].Substring(0, 1).ToUpper() + words[i].Substring(1);
+        }
+
+        return string.Join(' ', words);
+    }
 }

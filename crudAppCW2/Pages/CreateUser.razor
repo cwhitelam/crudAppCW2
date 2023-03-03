@@ -17,13 +17,13 @@
 
     <div class="form-group">
         <label for="firstName">First Name:</label>
-        <InputText @bind-Value="User.FirstName" placeholder="First Name" class="form-control" style="width: 450px;"/>
+        <InputText @bind-Value="User.FirstName" placeholder="First Name" class="form-control" style="width: 450px;" @oninput="(() => CapitalizeName(User, u => u.FirstName, (u, value) => u.FirstName = value))"/>
         <ValidationMessage For="@(() => User.FirstName)"/>
     </div>
 
     <div class="form-group">
         <label for="lastName">Last Name:</label>
-        <InputText @bind-Value="User.LastName" placeholder="Last Name" class="form-control" style="width: 450px;"/>
+        <InputText @bind-Value="User.LastName" placeholder="Last Name" class="form-control" style="width: 450px;" @oninput="(() => CapitalizeName(User, u => u.LastName, (u, value) => u.LastName = value))"/>
         <ValidationMessage For="@(() => User.LastName)"/>
     </div>
 
@@ -45,16 +45,22 @@
         <div>
             <label for="role2">Choose Department:</label>
             <select @bind="User.DepartmentId" class="form-select" style="width: 290px;">
-                <option value="1">Commercial</option>
-                <option value="2">Golf Course</option>
-                <option value="3">Maintenance</option>
-                <option value="4">IT</option>
-                <option value="5">Admin</option>
+                <option value="1">Admin</option>
+                <option value="2">Commercial</option>
+                <option value="3">Engineering</option>
+                <option value="4">Fabrication</option>
+                <option value="5">Golf Course</option>
+                <option value="6">Human Resources</option>
+                <option value="7">IT</option>
+                <option value="8">Maintenance</option>
+                <option value="9">Sales</option>
+                <option value="10">Superior Walls</option>
             </select>
         </div>
     </div>
+
     <br/>
-    <button class="btn btn-primary" type="submit">Add This User</button>
+    <button class="btn btn-primary" type="submit">Add User</button>
     <button class="btn btn-secondary" @onclick="CreateUsers">Back</button>
 
 </EditForm>
@@ -128,6 +134,25 @@
         }
     }
 
+    private void CapitalizeName(User user, Func<User, string> nameSelector, Action<User, string> nameSetter)
+    {
+        var name = nameSelector(user);
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            return;
+        }
+
+        var words = name.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+        for (int i = 0; i < words.Length; i++)
+        {
+            var word = words[i];
+            words[i] = char.ToUpper(word[0]) + word.Substring(1).ToLower();
+        }
+
+        name = string.Join(" ", words);
+        nameSetter(user, name);
+    }
 
     private void CreateUsers()
     {
