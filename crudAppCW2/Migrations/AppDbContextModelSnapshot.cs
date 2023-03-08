@@ -41,22 +41,47 @@ namespace crudAppCW2.Migrations
                         new
                         {
                             Id = 2,
-                            Name = "Engineering"
+                            Name = "Commercial"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Golf Course"
+                            Name = "Engineering"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "Human Resources"
+                            Name = "Fabrication"
                         },
                         new
                         {
                             Id = 5,
+                            Name = "Golf Course"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Human Resources"
+                        },
+                        new
+                        {
+                            Id = 7,
                             Name = "IT"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Maintenance"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Sales"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Superior Walls"
                         });
                 });
 
@@ -73,6 +98,18 @@ namespace crudAppCW2.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Role");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "User"
+                        });
                 });
 
             modelBuilder.Entity("crudAppCW2.Data.Models.UserRole", b =>
@@ -149,7 +186,7 @@ namespace crudAppCW2.Migrations
                         .HasForeignKey("DepartmentId");
 
                     b.HasOne("crudAppCW2.Data.Models.Role", "Role")
-                        .WithMany()
+                        .WithMany("Users")
                         .HasForeignKey("RoleId");
 
                     b.Navigation("Department");
@@ -165,6 +202,8 @@ namespace crudAppCW2.Migrations
             modelBuilder.Entity("crudAppCW2.Data.Models.Role", b =>
                 {
                     b.Navigation("UserRoles");
+
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("crudAppCW2.Models.User", b =>

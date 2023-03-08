@@ -56,6 +56,10 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Role>()
             .Property(r => r.Name)
             .IsRequired();
+        modelBuilder.Entity<Role>().HasData(
+            new Role { Id = 1, Name = "Admin" },
+            new Role { Id = 2, Name = "User" }
+        );
 
         // Configure Department entity
         modelBuilder.Entity<Department>()
