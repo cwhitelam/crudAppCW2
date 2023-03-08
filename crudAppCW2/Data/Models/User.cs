@@ -12,11 +12,14 @@ public class User
     public string LastName { get; set; }
     [Required(ErrorMessage = "Please enter your email")]
     public string Email { get; set; }
-    public int? DepartmentId { get; set; }
+    [Required(ErrorMessage = "Please select a role")]
     public int? RoleId { get; set; }
-    public Department? Department { get; set; }
     public Role? Role { get; set; }
+    public int? DepartmentId { get; set; }
+    public Department? Department { get; set; }
+
     public ICollection<UserRole> UserRoles { get; set; }
+
     public string GetCapitalizedString(string str)
     {
         if (string.IsNullOrEmpty(str))
