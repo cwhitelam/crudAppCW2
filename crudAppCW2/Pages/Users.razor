@@ -24,69 +24,73 @@ else
         </tr>
         </thead>
         <tbody>
-        @foreach (var User in UsersTable)
+        @foreach (var User in PagedUsers)
         {
             <tr>
                 <td>@User.GetCapitalizedString(User.FirstName) @User.GetCapitalizedString(User.LastName)</td>
                 <td>@User.Email</td>
-                <td>@(User.RoleId == 1 ? "Admin" : "User")</td>
                 <td>
-                    @(User.DepartmentId == 1 ? "Admin" :
-                        User.DepartmentId == 2 ? "Commercial" :
-                            User.DepartmentId == 3 ? "Engineering" :
-                                User.DepartmentId == 4 ? "Fabrication" :
-                                    User.DepartmentId == 5 ? "Golf Course" :
-                                        User.DepartmentId == 6 ? "Human Resources" :
-                                            User.DepartmentId == 7 ? "IT" :
-                                                User.DepartmentId == 8 ? "Maintenance" :
-                                                    User.DepartmentId == 9 ? "Sales" :
-                                                        User.DepartmentId == 10 ? "Superior Walls" :
-                                                            "Admin")
+                    @foreach (var userRole in User.UserRoles)
+                    {
+                        <div class="me-1">
+                            @userRole.Role?.Name
+                        </div>
+                    }
                 </td>
-
                 <td>
-                    <button class="btn btn-danger" @onclick="(() => DeleteUser(User.Id))">Delete</button>
-                    <button class="btn btn-primary" @onclick="(() => EditUser(User.Id))">Edit</button>
+                    @User.Department?.Name
+                </td>
+                <td>
+                    <button class="btn btn-danger" @onclick="async () => await DeleteUser(User.UserId)">Delete</button>
+                    <button class="btn btn-primary" @onclick="(() => EditUser(User.UserId))">Edit</button>
                 </td>
             </tr>
         }
 
+
         </tbody>
     </table>
 
-    <ul class="pagination mt-3">
-        <li class="page-item @(CurrentPage == 1 ? "disabled" : "")">
-            <button class="page-link" disabled="@IsPrevDisabled" @onclick="LoadPrevPage">Previous</button>
-        </li>
-        @for (int i = 1; i <= TotalPages; i++)
-        {
-            <li class="page-item @(CurrentPage == i ? "active" : "")">
-                <button class="page-link" @onclick="(() => OnPageChanged(i))">@i</button>
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @(IsPrevDisabled ? "disabled" : "")">
+                <button class="page-link" disabled="@IsPrevDisabled" @onclick="LoadPrevPage" tabindex="-1">Previous</button>
             </li>
-        }
-        <li class="page-item @(CurrentPage == TotalPages ? "disabled" : "")">
-            <button class="page-link" disabled="@IsNextDisabled" @onclick="LoadNextPage">Next</button>
-        </li>
-    </ul>
+            @for (int i = 1; i <= TotalPages; i++)
+            {
+                <li class="page-item @(CurrentPage == i ? "active" : "")">
+                    <button class="page-link" @onclick="(() => OnPageChanged(i))">@i</button>
+                </li>
+            }
+            <li class="page-item @(IsNextDisabled ? "disabled" : "")">
+                <button class="page-link" disabled="@IsNextDisabled" @onclick="LoadNextPage">Next</button>
+            </li>
+        </ul>
+    </nav>
+
 
     <br/>
     <td>
         <button class="btn btn-success" @onclick="NavigateToCreateUser">Create User</button>
+        <button class="btn btn-success" @onclick="NavigateToRestoreUser">Restore Deleted User</button>
+
     </td>
 }
 
 @code {
     private List<User> UsersTable { get; set; }
     private List<User> PagedUsers { get; set; } = new List<User>();
-    private int PageSize { get; set; } = 4;
+    private List<User> DeletedUsersTable { get; set; } = new List<User>();
+
+    private int PageSize { get; set; } = 5;
     private int CurrentPage { get; set; } = 1;
     private bool IsPrevDisabled => CurrentPage == 1;
     private bool IsNextDisabled => (CurrentPage * PageSize) >= UsersTable.Count;
     private int TotalPages => (int)Math.Ceiling((double)UsersTable.Count / PageSize);
 
-
     [Inject]
     private NavigationManager NavigationManager { get; set; }
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -103,7 +107,9 @@ else
         await using var context = ContextFactory.CreateDbContext();
         UsersTable = await context.User
             .Include(x => x.Department)
-            .Include(x => x.Role)
+            .Include(x => x.UserRoles).ThenInclude(x => x.Role)
+            .Where(x => !x.IsRestored)
+            .OrderBy(u => u.FirstName.ToLower())
             .ToListAsync();
         LoadPage();
     }
@@ -130,17 +136,23 @@ else
         NavigationManager.NavigateTo("/CreateUser");
     }
 
-    private async void DeleteUser(int id)
+    private async Task DeleteUser(int id)
     {
         await using var context = ContextFactory.CreateDbContext();
-        var userToDelete = await context.User.FirstOrDefaultAsync(u => u.Id == id);
+        var userToDelete = await context.User.FirstOrDefaultAsync(u => u.UserId == id);
         if (userToDelete != null)
         {
-            context.User.Remove(userToDelete);
+            userToDelete.IsRestored = true;
             await context.SaveChangesAsync();
             await LoadData();
         }
     }
+
+    private void NavigateToRestoreUser()
+    {
+        NavigationManager.NavigateTo("/DeletedUsers");
+    }
+
 
     private void EditUser(int id)
     {
@@ -152,6 +164,5 @@ else
         CurrentPage = page;
         LoadPage();
     }
-
 
 }
