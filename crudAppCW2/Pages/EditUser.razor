@@ -31,20 +31,31 @@ else
         <div class="form-group d-flex">
             <div class="mr-4">
                 <label for="role1">Choose Role:</label>
-                <select @bind="User.RoleId" class="form-select" style="width: 160px;">
-                    @foreach (var role in Roles)
-                    {
-                        <option value="@role.Id">@role.Name</option>
-                    }
-                </select>
-
+                @foreach (var userRole in User.UserRoles)
+                {
+                    <div class="d-flex mb-2 me-3">
+                        <select @bind="userRole.RoleId" class="form-select" style="width: 160px;">
+                            @foreach (var role in Roles)
+                            {
+                                <option value="@role.RoleId">@role.Name</option>
+                            }
+                        </select>
+                        <button type="button" class="btn btn-danger ms-2" @onclick="@(() => User.UserRoles.Remove(userRole))">
+                            Remove
+                        </button>
+                    </div>
+                }
+                <button type="button" class="btn btn-primary" @onclick="@(() => User.UserRoles.Add(new UserRole { RoleId = 1 }))">
+                    Add Role +
+                </button>
             </div>
+
             <div>
                 <label for="role2">Choose Department:</label>
                 <select @bind="User.DepartmentId" class="form-select" style="width: 290px;">
                     @foreach (var department in Departments)
                     {
-                        <option value="@department.Id">@department.Name</option>
+                        <option value="@department.DepartmentId">@department.Name</option>
                     }
                 </select>
             </div>
@@ -52,8 +63,6 @@ else
 
         <br/>
         <button class="btn btn-primary" @onclick="UpdateUser">Update</button>
-        <button class="btn btn-secondary" @onclick='() => NavigationManager.NavigateTo("/Users")'>Back to Users</button>
-
     </form>
 }
 
@@ -75,8 +84,8 @@ else
         await using var context = ContextFactory.CreateDbContext();
         User = await context.User
             .Include(x => x.Department)
-            .Include(x => x.Role)
-            .FirstOrDefaultAsync(x => x.Id == Id);
+            .Include(x => x.UserRoles)
+            .FirstOrDefaultAsync(x => x.UserId == Id);
         Departments = await context.Department.ToListAsync();
         Roles = await context.Role.ToListAsync();
     }
@@ -87,20 +96,29 @@ else
         {
             return;
         }
-
-    // Retrieve the selected Role and Department objects
+        
+        // Retrieve the selected Role and Department objects
         await using var context = ContextFactory.CreateDbContext();
-        var role = await context.Role.FirstOrDefaultAsync(r => r.Id == User.RoleId);
-        var department = await context.Department.FirstOrDefaultAsync(d => d.Id == User.DepartmentId);
 
-    // Update the User object with the selected Role and Department
-        User.Role = role;
-        User.Department = department;
+        var userRoles = await context.UserRole.Where(x => x.UserId == User.UserId).ToListAsync();
+        foreach (var userRole in User.UserRoles)
+        {
+            if (userRoles.Any(x => x.RoleId == userRole.RoleId)) continue;
+            context.UserRole.Add(new UserRole { UserId = User.UserId, RoleId = userRole.RoleId });
+        }
+        foreach (var userRole in userRoles)
+        {
+            if (User.UserRoles.Any(x => x.RoleId == userRole.RoleId)) continue;
+            context.UserRole.Remove(userRole);
+        }
+        
+        // Update the User object with the selected Role and Department
+        User.Department = await context.Department.FirstOrDefaultAsync(d => d.DepartmentId == User.DepartmentId);
 
+        User.UserRoles.Clear();
         context.User.Update(User);
         await context.SaveChangesAsync();
 
-        NavigationManager.NavigateTo("/Users");
+        //NavigationManager.NavigateTo("/Users");
     }
-
 }
