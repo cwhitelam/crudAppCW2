@@ -36,12 +36,23 @@
     <div class="form-group d-flex">
         <div class="mr-4">
             <label for="role1">Choose Role:</label>
-            <select @bind="User.RoleId" class="form-select" style="width: 160px;">
-                @foreach (var role in Roles)
-                {
-                    <option value="@role.Id">@role.Name</option>
-                }
-            </select>
+            @foreach (var userRole in User.UserRoles)
+            {
+                <div class="d-flex mb-2 me-3">
+                    <select @bind="userRole.RoleId" class="form-select" style="width: 160px;">
+                        @foreach (var role in Roles)
+                        {
+                            <option value="@role.RoleId">@role.Name</option>
+                        }
+                    </select>
+                    <button type="button" class="btn btn-danger ms-2" @onclick="@(() => User.UserRoles.Remove(userRole))">
+                        Remove
+                    </button>
+                </div>
+            }
+            <button type="button" class="btn btn-primary" @onclick="@(() => User.UserRoles.Add(new UserRole { RoleId = 1 }))">
+                Add Role +
+            </button>
         </div>
 
         <div>
@@ -49,12 +60,11 @@
             <select @bind="User.DepartmentId" class="form-select" style="width: 290px;">
                 @foreach (var department in Departments)
                 {
-                    <option value="@department.Id">@department.Name</option>
+                    <option value="@department.DepartmentId">@department.Name</option>
                 }
             </select>
         </div>
     </div>
-
 
     <br/>
     <button class="btn btn-primary" type="submit">Add User</button>
@@ -64,7 +74,13 @@
 
 
 @code {
-    private User? User = new User() { RoleId = 1 };
+    private User? User = new User
+    {
+        UserRoles = new List<UserRole>
+        {
+            new() { RoleId = 1 }
+        }
+    };
 
     private List<Department> Departments { get; set; }
     private List<Role> Roles { get; set; }
@@ -103,7 +119,7 @@
         {
             if (User is not null)
             {
-                User.RoleId = User.RoleId; // Set RoleId
+                //User.RoleId = User.RoleId; // Set RoleId
                 User.DepartmentId = User.DepartmentId; // Set DepartmentId
 
                 await using var context = await ContextFactory.CreateDbContextAsync();
@@ -115,9 +131,12 @@
                 ErrorMessage = null;
 
     // Reset User object for next creation
-                User = new User()
+                User = new User
                 {
-                    RoleId = 1
+                    UserRoles = new List<UserRole>
+                    {
+                        new() { RoleId = 1 }
+                    }
                 };
             }
         }
