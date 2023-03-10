@@ -6,11 +6,11 @@
     <projectFile profileName="https">crudAppCW2/crudAppCW2.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f8cdaa88-c30e-4229-be83-2cf0d05911bb" name="Changes" comment="update classes">
+    <list default="true" id="f8cdaa88-c30e-4229-be83-2cf0d05911bb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.crudAppCW2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.crudAppCW2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/Data/crudAppDb.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Data/crudAppDb.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crudAppCW2/Data/crudAppDb.sqlite-shm" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Data/crudAppDb.sqlite-shm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crudAppCW2/Data/AppDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Data/AppDbContext.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crudAppCW2/Data/crudAppDb.sqlite-wal" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Data/crudAppDb.sqlite-wal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crudAppCW2/Pages/EditUser.razor" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Pages/EditUser.razor" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,13 +34,6 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/eeaf281031b3ffe3d44a91e71a5808c8d236a9caabbb947871e6dc415bd8b/Migration.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Data/AppDbContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Data/AppDbContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Data/Models/Role.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Data/Models/User.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Data/Models/UserRole.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Migrations/AppDbContextModelSnapshot.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/CreateUser.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/crudAppCW2/Pages/_Host.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/crudAppCW2/obj/Debug/net7.0/.NETCoreApp,Version=v7.0.AssemblyAttributes.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -139,14 +132,8 @@
       <workItem from="1677107349733" duration="352000" />
       <workItem from="1677107717238" duration="73849000" />
       <workItem from="1678139709739" duration="17647000" />
-      <workItem from="1678237804269" duration="5465000" />
-    </task>
-    <task id="LOCAL-00015" summary="add OnModelCreating">
-      <created>1677121906174</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1677121906174</updated>
+      <workItem from="1678237804269" duration="5662000" />
+      <workItem from="1678314249515" duration="6658000" />
     </task>
     <task id="LOCAL-00016" summary="initial commit">
       <created>1677121929199</created>
@@ -484,7 +471,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678313997584</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="commit">
+      <created>1678314070787</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1678314070787</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -516,7 +510,6 @@
     <MESSAGE value="no commit" />
     <MESSAGE value="fixed Role and Dept value visual on Table&#10;added pagination to show 4 values @ time" />
     <MESSAGE value="modify Index.razor" />
-    <MESSAGE value="commit" />
     <MESSAGE value="update to look like .md file" />
     <MESSAGE value="update Index.razor" />
     <MESSAGE value="update Dept table" />
@@ -531,7 +524,8 @@
     <MESSAGE value="renamed Role and Dept options" />
     <MESSAGE value="removed unused methods" />
     <MESSAGE value="update classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="update classes" />
+    <MESSAGE value="commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
