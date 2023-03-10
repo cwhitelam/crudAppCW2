@@ -1,5 +1,5 @@
 <h1>CRUD App with Blazor</h1>
-This project is a simple CRUD (Create, Read, Update, Delete) application built with Blazor, a .NET web framework for building interactive web UIs using C#.
+This project was created using the Blazor WebAssembly framework, which allows developers to build interactive web UIs using C#. The application implements CRUD (Create, Read, Update, Delete) functionality for managing a list of users. The user interface was built using HTML and CSS with the help of the Bootstrap CSS framework. The application also uses ASP.NET Core and Entity Framework Core for server-side functionality and data storage, respectively. Overall, the combination of these technologies allows for the creation of a responsive and functional web application that can be deployed to a variety of platforms.
 
 <h2>Features</h2>
 
