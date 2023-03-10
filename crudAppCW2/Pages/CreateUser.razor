@@ -37,27 +37,24 @@
         <div class="mr-4">
             <label for="role1">Choose Role:</label>
             <select @bind="User.RoleId" class="form-select" style="width: 160px;">
-                <option value="1">Admin</option>
-                <option value="2">User</option>
+                @foreach (var role in Roles)
+                {
+                    <option value="@role.Id">@role.Name</option>
+                }
             </select>
         </div>
 
         <div>
             <label for="role2">Choose Department:</label>
             <select @bind="User.DepartmentId" class="form-select" style="width: 290px;">
-                <option value="1">Admin</option>
-                <option value="2">Commercial</option>
-                <option value="3">Engineering</option>
-                <option value="4">Fabrication</option>
-                <option value="5">Golf Course</option>
-                <option value="6">Human Resources</option>
-                <option value="7">IT</option>
-                <option value="8">Maintenance</option>
-                <option value="9">Sales</option>
-                <option value="10">Superior Walls</option>
+                @foreach (var department in Departments)
+                {
+                    <option value="@department.Id">@department.Name</option>
+                }
             </select>
         </div>
     </div>
+
 
     <br/>
     <button class="btn btn-primary" type="submit">Add User</button>
@@ -69,7 +66,8 @@
 @code {
     private User? User = new User() { RoleId = 1 };
 
-    private Role? Role = new Role();
+    private List<Department> Departments { get; set; }
+    private List<Role> Roles { get; set; }
 
     private bool IsBusy { get; set; }
 
@@ -80,6 +78,18 @@
     [Inject]
     private NavigationManager _navigationManager { get; set; }
 
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+    
+    private async Task LoadData()
+    {
+        await using var context = ContextFactory.CreateDbContext();
+        Departments = await context.Department.ToListAsync();
+        Roles = await context.Role.ToListAsync();
+    }
+    
     private async Task HandleValidSubmit()
     {
         if (IsBusy)
