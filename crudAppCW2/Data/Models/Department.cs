@@ -5,7 +5,7 @@ namespace crudAppCW2.Data.Models;
 
 public class Department
 {
-    public int Id { get; set; }
+    public int DepartmentId { get; set; }
     
     [Required]
     [StringLength(50)]
