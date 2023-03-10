@@ -5,16 +5,21 @@ namespace crudAppCW2.Models;
 
 public class User
 {
-    public int Id { get; set; }
+    public int UserId { get; set; }
     [Required(ErrorMessage = "Please enter your first name")]
     public string FirstName { get; set; }
     [Required(ErrorMessage = "Please enter your last name")]
     public string LastName { get; set; }
+    
     [Required(ErrorMessage = "Please enter your email")]
     public string Email { get; set; }
-    [Required(ErrorMessage = "Please select a role")]
-    public int? RoleId { get; set; }
-    public Role? Role { get; set; }
+    public bool IsRestored { get; set; }
+    public bool IsSelected { get; set; }
+
+    
+    //[Required(ErrorMessage = "Please select a role")]
+    /*public int? RoleId { get; set; }
+    public Role? Role { get; set; }*/
     public int? DepartmentId { get; set; }
     public Department? Department { get; set; }
 
