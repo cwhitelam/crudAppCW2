@@ -16,7 +16,7 @@ await EnsureDatabaseIsMigrated(app.Services);
 async Task EnsureDatabaseIsMigrated(IServiceProvider services)
 {
     using var scope = services.CreateScope();
-    using var ctx = scope.ServiceProvider.GetService<AppDbContext>();
+    await using var ctx = scope.ServiceProvider.GetService<AppDbContext>();
     if (ctx is not null)
     {
         await ctx.Database.MigrateAsync();
