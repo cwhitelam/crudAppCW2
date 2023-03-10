@@ -19,7 +19,7 @@ namespace crudAppCW2.Migrations
 
             modelBuilder.Entity("crudAppCW2.Data.Models.Department", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("DepartmentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -28,66 +28,66 @@ namespace crudAppCW2.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("DepartmentId");
 
                     b.ToTable("Department");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            DepartmentId = 1,
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = 2,
+                            DepartmentId = 2,
                             Name = "Commercial"
                         },
                         new
                         {
-                            Id = 3,
+                            DepartmentId = 3,
                             Name = "Engineering"
                         },
                         new
                         {
-                            Id = 4,
+                            DepartmentId = 4,
                             Name = "Fabrication"
                         },
                         new
                         {
-                            Id = 5,
+                            DepartmentId = 5,
                             Name = "Golf Course"
                         },
                         new
                         {
-                            Id = 6,
+                            DepartmentId = 6,
                             Name = "Human Resources"
                         },
                         new
                         {
-                            Id = 7,
+                            DepartmentId = 7,
                             Name = "IT"
                         },
                         new
                         {
-                            Id = 8,
+                            DepartmentId = 8,
                             Name = "Maintenance"
                         },
                         new
                         {
-                            Id = 9,
+                            DepartmentId = 9,
                             Name = "Sales"
                         },
                         new
                         {
-                            Id = 10,
+                            DepartmentId = 10,
                             Name = "Superior Walls"
                         });
                 });
 
             modelBuilder.Entity("crudAppCW2.Data.Models.Role", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("RoleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -95,19 +95,19 @@ namespace crudAppCW2.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("RoleId");
 
                     b.ToTable("Role");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            RoleId = 1,
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = 2,
+                            RoleId = 2,
                             Name = "User"
                         });
                 });
@@ -129,7 +129,7 @@ namespace crudAppCW2.Migrations
 
             modelBuilder.Entity("crudAppCW2.Models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -144,18 +144,19 @@ namespace crudAppCW2.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsRestored")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsSelected")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("RoleId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
                     b.HasIndex("DepartmentId");
-
-                    b.HasIndex("RoleId");
 
                     b.ToTable("User");
                 });
@@ -185,13 +186,7 @@ namespace crudAppCW2.Migrations
                         .WithMany("Users")
                         .HasForeignKey("DepartmentId");
 
-                    b.HasOne("crudAppCW2.Data.Models.Role", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId");
-
                     b.Navigation("Department");
-
-                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("crudAppCW2.Data.Models.Department", b =>
@@ -202,8 +197,6 @@ namespace crudAppCW2.Migrations
             modelBuilder.Entity("crudAppCW2.Data.Models.Role", b =>
                 {
                     b.Navigation("UserRoles");
-
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("crudAppCW2.Models.User", b =>

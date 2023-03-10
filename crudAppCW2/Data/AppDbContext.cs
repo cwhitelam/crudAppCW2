@@ -24,8 +24,6 @@ public class AppDbContext : DbContext
     public DbSet<Department> Department => Set<Department>();
     public DbSet<UserRole> UserRole => Set<UserRole>();
     public DbSet<Role> Role => Set<Role>();
-    public object Roles { get; set; }
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -33,7 +31,7 @@ public class AppDbContext : DbContext
 
         // Configure User entity
         modelBuilder.Entity<User>()
-            .HasKey(u => u.Id);
+            .HasKey(u => u.UserId);
         modelBuilder.Entity<User>()
             .Property(u => u.FirstName)
             .IsRequired();
@@ -43,9 +41,9 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<User>()
             .Property(u => u.Email)
             .IsRequired();
-        modelBuilder.Entity<User>()
-            .Property(u => u.RoleId)
-            .IsRequired(false);
+        // modelBuilder.Entity<User>()
+        //     .Property(u => u.RoleId)
+        //     .IsRequired(false);
         modelBuilder.Entity<User>()
             .Property(u => u.DepartmentId)
             .IsRequired(false);
@@ -53,32 +51,32 @@ public class AppDbContext : DbContext
 
         // Configure Role entity
         modelBuilder.Entity<Role>()
-            .HasKey(r => r.Id);
+            .HasKey(r => r.RoleId);
         modelBuilder.Entity<Role>()
             .Property(r => r.Name)
             .IsRequired();
         modelBuilder.Entity<Role>().HasData(
-            new Role { Id = 1, Name = "Admin" },
-            new Role { Id = 2, Name = "User" }
+            new Role { RoleId = 1, Name = "Admin" },
+            new Role { RoleId = 2, Name = "User" }
         );
 
         // Configure Department entity
         modelBuilder.Entity<Department>()
-            .HasKey(d => d.Id);
+            .HasKey(d => d.DepartmentId);
         modelBuilder.Entity<Department>()
             .Property(d => d.Name)
             .IsRequired();
         modelBuilder.Entity<Department>().HasData(
-            new Department { Id = 1, Name = "Admin" },
-            new Department { Id = 2, Name = "Commercial" },
-            new Department { Id = 3, Name = "Engineering" },
-            new Department { Id = 4, Name = "Fabrication" },
-            new Department { Id = 5, Name = "Golf Course" },
-            new Department { Id = 6, Name = "Human Resources" },
-            new Department { Id = 7, Name = "IT" },
-            new Department { Id = 8, Name = "Maintenance" },
-            new Department { Id = 9, Name = "Sales" },
-            new Department { Id = 10, Name = "Superior Walls" }
+            new Department { DepartmentId = 1, Name = "Admin" },
+            new Department { DepartmentId = 2, Name = "Commercial" },
+            new Department { DepartmentId = 3, Name = "Engineering" },
+            new Department { DepartmentId = 4, Name = "Fabrication" },
+            new Department { DepartmentId = 5, Name = "Golf Course" },
+            new Department { DepartmentId = 6, Name = "Human Resources" },
+            new Department { DepartmentId = 7, Name = "IT" },
+            new Department { DepartmentId = 8, Name = "Maintenance" },
+            new Department { DepartmentId = 9, Name = "Sales" },
+            new Department { DepartmentId = 10, Name = "Superior Walls" }
         );
 
         // Configure UserRole entity
