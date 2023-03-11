@@ -1,0 +1,73 @@
+@page "/NotificationList"
+@using crudAppCW2.Data
+@using crudAppCW2.Data.Models
+@using Microsoft.EntityFrameworkCore;
+
+<PageTitle>Notifications</PageTitle>
+
+<h3>Notifications</h3>
+
+@if (Notifications == null)
+{
+    <p>Loading notifications...</p>
+}
+else if (Notifications.Count == 0)
+{
+    <p>No notifications found.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Subject</th>
+            <th>Body</th>
+            <th>Role</th>
+            <th>Users</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var notification in Notifications)
+        {
+            <tr>
+                <td>@notification.Subject</td>
+                <td>@notification.Body</td>
+                @*<td>@notification.Role.Name</td>*@
+                <td>
+                    @*
+                    @foreach (var user in notification.Users)
+                    *@
+                    {
+                        @*
+                        <div>@user.User.FirstName @user.User.LastName</div>
+                    *@
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Notification> Notifications { get; set; }
+
+    [Inject]
+    private IDbContextFactory<AppDbContext> ContextFactory { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadNotifications();
+    }
+
+    private async Task LoadNotifications()
+    {
+        await using var context = await ContextFactory.CreateDbContextAsync();
+        /*Notifications = await context.Notification
+            .Include(n => n.Role)
+            .Include(n => n.Users)
+            .ThenInclude(nu => nu.User)
+            .ToListAsync();*/
+    }
+
+}

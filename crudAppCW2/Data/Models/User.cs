@@ -25,6 +25,7 @@ public class User
 
     public ICollection<UserRole> UserRoles { get; set; }
 
+
     public string GetCapitalizedString(string str)
     {
         if (string.IsNullOrEmpty(str))
