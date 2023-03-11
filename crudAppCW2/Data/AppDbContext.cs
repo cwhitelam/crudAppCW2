@@ -6,6 +6,7 @@ namespace crudAppCW2.Data;
 
 public class AppDbContext : DbContext
 {
+
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
     }
@@ -24,6 +25,8 @@ public class AppDbContext : DbContext
     public DbSet<Department> Department => Set<Department>();
     public DbSet<UserRole> UserRole => Set<UserRole>();
     public DbSet<Role> Role => Set<Role>();
+    public DbSet<Notification> Notification { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

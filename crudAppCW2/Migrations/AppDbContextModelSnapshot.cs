@@ -85,6 +85,26 @@ namespace crudAppCW2.Migrations
                         });
                 });
 
+            modelBuilder.Entity("crudAppCW2.Data.Models.Notification", b =>
+                {
+                    b.Property<int>("NotificationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("RoleId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("NotificationId");
+
+                    b.ToTable("Notification");
+                });
+
             modelBuilder.Entity("crudAppCW2.Data.Models.Role", b =>
                 {
                     b.Property<int>("RoleId")
