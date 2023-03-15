@@ -119,7 +119,7 @@
         {
             if (User is not null)
             {
-                //User.RoleId = User.RoleId; // Set RoleId
+                // User.RoleId = User.RoleId; // Set RoleId
                 User.DepartmentId = User.DepartmentId; // Set DepartmentId
 
                 await using var context = await ContextFactory.CreateDbContextAsync();
