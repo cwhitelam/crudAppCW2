@@ -11,8 +11,8 @@ using crudAppCW2.Data;
 namespace crudAppCW2.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230310215915_NotificationTable3")]
-    partial class NotificationTable3
+    [Migration("20230314222723_DepartmentTable3")]
+    partial class DepartmentTable3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -88,34 +88,40 @@ namespace crudAppCW2.Migrations
                         });
                 });
 
-            modelBuilder.Entity("crudAppCW2.Data.Models.Notification", b =>
+            modelBuilder.Entity("crudAppCW2.Data.Models.NotificationRole", b =>
                 {
                     b.Property<int>("NotificationId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Body")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<int?>("RoleId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Subject")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("NotificationRoleId")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("User")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.HasKey("NotificationId", "RoleId");
 
-                    b.HasKey("NotificationId");
+                    b.HasIndex("RoleId");
 
-                    b.ToTable("Notification");
+                    b.ToTable("NotificationRole");
+                });
+
+            modelBuilder.Entity("crudAppCW2.Data.Models.NotificationUser", b =>
+                {
+                    b.Property<int>("NotificationId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("NotificationUserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("NotificationId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("NotificationUser");
                 });
 
             modelBuilder.Entity("crudAppCW2.Data.Models.Role", b =>
@@ -145,22 +151,7 @@ namespace crudAppCW2.Migrations
                         });
                 });
 
-            modelBuilder.Entity("crudAppCW2.Data.Models.UserRole", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("UserRole");
-                });
-
-            modelBuilder.Entity("crudAppCW2.Models.User", b =>
+            modelBuilder.Entity("crudAppCW2.Data.Models.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -187,11 +178,111 @@ namespace crudAppCW2.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("UserId");
 
                     b.HasIndex("DepartmentId");
 
+                    b.HasIndex("RoleId");
+
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("crudAppCW2.Data.Models.UserRole", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("UserRole");
+                });
+
+            modelBuilder.Entity("crudAppCW2.Models.Notification", b =>
+                {
+                    b.Property<int>("NotificationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("RoleId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("NotificationId");
+
+                    b.ToTable("Notification");
+                });
+
+            modelBuilder.Entity("crudAppCW2.Data.Models.NotificationRole", b =>
+                {
+                    b.HasOne("crudAppCW2.Models.Notification", "Notification")
+                        .WithMany("NotificationRoles")
+                        .HasForeignKey("NotificationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("crudAppCW2.Data.Models.Role", "Role")
+                        .WithMany("NotificationRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Notification");
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("crudAppCW2.Data.Models.NotificationUser", b =>
+                {
+                    b.HasOne("crudAppCW2.Models.Notification", "Notification")
+                        .WithMany("NotificationUsers")
+                        .HasForeignKey("NotificationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("crudAppCW2.Data.Models.User", "User")
+                        .WithMany("NotificationUsers")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Notification");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("crudAppCW2.Data.Models.User", b =>
+                {
+                    b.HasOne("crudAppCW2.Data.Models.Department", "Department")
+                        .WithMany("Users")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("crudAppCW2.Data.Models.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("crudAppCW2.Data.Models.UserRole", b =>
@@ -202,7 +293,7 @@ namespace crudAppCW2.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("crudAppCW2.Models.User", "User")
+                    b.HasOne("crudAppCW2.Data.Models.User", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -213,15 +304,6 @@ namespace crudAppCW2.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("crudAppCW2.Models.User", b =>
-                {
-                    b.HasOne("crudAppCW2.Data.Models.Department", "Department")
-                        .WithMany("Users")
-                        .HasForeignKey("DepartmentId");
-
-                    b.Navigation("Department");
-                });
-
             modelBuilder.Entity("crudAppCW2.Data.Models.Department", b =>
                 {
                     b.Navigation("Users");
@@ -229,12 +311,23 @@ namespace crudAppCW2.Migrations
 
             modelBuilder.Entity("crudAppCW2.Data.Models.Role", b =>
                 {
+                    b.Navigation("NotificationRoles");
+
                     b.Navigation("UserRoles");
                 });
 
-            modelBuilder.Entity("crudAppCW2.Models.User", b =>
+            modelBuilder.Entity("crudAppCW2.Data.Models.User", b =>
                 {
+                    b.Navigation("NotificationUsers");
+
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("crudAppCW2.Models.Notification", b =>
+                {
+                    b.Navigation("NotificationRoles");
+
+                    b.Navigation("NotificationUsers");
                 });
 #pragma warning restore 612, 618
         }

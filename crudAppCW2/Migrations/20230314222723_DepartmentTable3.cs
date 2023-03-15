@@ -5,7 +5,7 @@
 namespace crudAppCW2.Migrations
 {
     /// <inheritdoc />
-    public partial class SeedDatabase2 : Migration
+    public partial class DepartmentTable3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

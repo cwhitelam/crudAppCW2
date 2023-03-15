@@ -5,7 +5,7 @@
 namespace crudAppCW2.Migrations
 {
     /// <inheritdoc />
-    public partial class EditRefactor : Migration
+    public partial class DepartmentTable2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
