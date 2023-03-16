@@ -4,6 +4,7 @@
 @using crudAppCW2.Data.Models
 @using Microsoft.EntityFrameworkCore
 @inject IDbContextFactory<AppDbContext> ContextFactory
+@inject NavigationManager NavigationManager
 
 <PageTitle>Create Notification</PageTitle>
 
@@ -56,7 +57,7 @@
             </div>
         </div>
         <div class="mb-4">
-            <label for="user1" class="me-2">Choose Users:</label>
+            <label for="user1" class="me-2">Choose User(s):</label>
             <div class="d-flex flex-column">
                 @foreach (var notificationUser in Notification.NotificationUsers)
                 {
@@ -128,11 +129,16 @@
     {
         await using var context = await ContextFactory.CreateDbContextAsync();
 
+    // Initialize the NotificationRoles and NotificationUsers collections if they are null
+        if (Notification.NotificationRoles == null) Notification.NotificationRoles = new List<NotificationRole>();
+        if (Notification.NotificationUsers == null) Notification.NotificationUsers = new List<NotificationUser>();
+
     // Create the notification
         var notification = new Notification
         {
             Subject = Notification.Subject,
             Body = Notification.Body,
+            CreatedDateTime = DateTime.Now,
             NotificationRoles = Notification.NotificationRoles,
             NotificationUsers = Notification.NotificationUsers
         };
@@ -140,6 +146,10 @@
         context.Notification.Add(notification);
         await context.SaveChangesAsync();
         NotificationCreated = true;
+
+    // Navigate to the notification list page
+        NavigationManager.NavigateTo("/NotificationList");
     }
+
 
 }
