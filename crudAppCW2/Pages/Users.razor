@@ -1,4 +1,5 @@
 ﻿@page "/Users"
+@page "/Users/{currentPage:int?}"
 @using crudAppCW2.Models
 @using crudAppCW2.Data
 @using Microsoft.EntityFrameworkCore
@@ -14,7 +15,22 @@
 }
 else
 {
-    <table class="table">
+    <ul class="pagination mt-3">
+        <li class="page-item @(CurrentPage == 1 ? "disabled" : "")">
+            <a class="page-link" @onclick="@(() => NavigateToPage(CurrentPage - 1))" tabindex="-1">Previous</a>
+        </li>
+        @for (int i = 1; i <= TotalPages; i++)
+        {
+            <li class="page-item @(CurrentPage == i ? "active" : "")">
+                <a class="page-link" @onclick="@(() => NavigateToPage(i))">@i</a>
+            </li>
+        }
+        <li class="page-item @(CurrentPage == TotalPages ? "disabled" : "")">
+            <a class="page-link" @onclick="@(() => NavigateToPage(CurrentPage + 1))">Next</a>
+        </li>
+    </ul>
+
+    <table class="table table-bordered table-striped">
         <thead>
         <tr>
             <th>User</th>
@@ -24,7 +40,7 @@ else
         </tr>
         </thead>
         <tbody>
-        @foreach (var User in PagedUsers)
+        @foreach (var User in UsersTable)
         {
             <tr>
                 <td>@User.GetCapitalizedString(User.FirstName) @User.GetCapitalizedString(User.LastName)</td>
@@ -51,42 +67,24 @@ else
         </tbody>
     </table>
 
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            <li class="page-item @(IsPrevDisabled ? "disabled" : "")">
-                <button class="page-link" disabled="@IsPrevDisabled" @onclick="LoadPrevPage" tabindex="-1">Previous</button>
-            </li>
-            @for (int i = 1; i <= TotalPages; i++)
-            {
-                <li class="page-item @(CurrentPage == i ? "active" : "")">
-                    <button class="page-link" @onclick="(() => OnPageChanged(i))">@i</button>
-                </li>
-            }
-            <li class="page-item @(IsNextDisabled ? "disabled" : "")">
-                <button class="page-link" disabled="@IsNextDisabled" @onclick="LoadNextPage">Next</button>
-            </li>
-        </ul>
-    </nav>
-
-
     <br/>
     <td>
-        <button class="btn btn-success" @onclick="NavigateToCreateUser">Create User</button>
-        <button class="btn btn-success" @onclick="NavigateToRestoreUser">Restore Deleted User</button>
+        <button class="btn btn-success" @onclick="NavigateToCreateUser">Create New User +</button>
+        <button class="btn btn-danger" @onclick="NavigateToRestoreUser">Restore Deleted User</button>
 
     </td>
 }
 
 @code {
     private List<User> UsersTable { get; set; }
-    private List<User> PagedUsers { get; set; } = new List<User>();
-    private List<User> DeletedUsersTable { get; set; } = new List<User>();
 
-    private int PageSize { get; set; } = 5;
-    private int CurrentPage { get; set; } = 1;
-    private bool IsPrevDisabled => CurrentPage == 1;
-    private bool IsNextDisabled => (CurrentPage * PageSize) >= UsersTable.Count;
-    private int TotalPages => (int)Math.Ceiling((double)UsersTable.Count / PageSize);
+    [Parameter]
+    public int? CurrentPage { get; set; }
+
+        private const int ItemsPerPage = 5;
+
+    private int TotalPages { get; set; }
+
 
     [Inject]
     private NavigationManager NavigationManager { get; set; }
@@ -94,46 +92,49 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        if (CurrentPage == null)
+        {
+            CurrentPage = 1;
+        }
+
         await LoadData();
     }
+
 
     protected override async Task OnParametersSetAsync()
     {
         await LoadData();
     }
 
+
     private async Task LoadData()
     {
+        if (CurrentPage is null or < 1)
+        {
+            NavigationManager.NavigateTo("/Users/1");
+            return;
+        }
+
         await using var context = ContextFactory.CreateDbContext();
+        var userCount = await context.User.CountAsync();
+        TotalPages = userCount == 0 ? 1 : (int)Math.Ceiling((double)userCount / ItemsPerPage);
+
+        if (CurrentPage > TotalPages)
+        {
+            NavigationManager.NavigateTo($"/Users/{TotalPages}");
+            return;
+        }
+
+        var itemsToSkip = (CurrentPage.Value - 1) * ItemsPerPage;
+
         UsersTable = await context.User
             .Include(x => x.Department)
             .Include(x => x.UserRoles).ThenInclude(x => x.Role)
             .Where(x => !x.IsRestored)
             .OrderBy(u => u.FirstName.ToLower())
+            .Skip(itemsToSkip)
+            .Take(ItemsPerPage)
             .ToListAsync();
-        LoadPage();
-    }
-
-    private void LoadPage()
-    {
-        PagedUsers = UsersTable.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
-    }
-
-    private void LoadPrevPage()
-    {
-        CurrentPage--;
-        LoadPage();
-    }
-
-    private void LoadNextPage()
-    {
-        CurrentPage++;
-        LoadPage();
-    }
-
-    private void NavigateToCreateUser()
-    {
-        NavigationManager.NavigateTo("/CreateUser");
     }
 
     private async Task DeleteUser(int id)
@@ -148,21 +149,27 @@ else
         }
     }
 
+    private void NavigateToCreateUser()
+    {
+        NavigationManager.NavigateTo("/CreateUser");
+    }
+
     private void NavigateToRestoreUser()
     {
         NavigationManager.NavigateTo("/DeletedUsers");
     }
-
 
     private void EditUser(int id)
     {
         NavigationManager.NavigateTo($"/EditUser/{id}");
     }
 
-    private async Task OnPageChanged(int page)
+    private void NavigateToPage(int? page)
     {
-        CurrentPage = page;
-        LoadPage();
+        if (page.HasValue && page.Value >= 1 && page.Value <= TotalPages)
+        {
+            NavigationManager.NavigateTo($"/Users/{page}");
+        }
     }
 
-}
+}   
