@@ -5,7 +5,6 @@
 @using Microsoft.EntityFrameworkCore
 @inject IDbContextFactory<AppDbContext> ContextFactory
 
-
 <PageTitle>Create Notification</PageTitle>
 
 <h3>Create Notification</h3>
@@ -32,48 +31,54 @@
         <InputTextArea id="body" class="form-control" @bind-Value="Notification.Body"/>
         <ValidationMessage For="@(() => Notification.Body)"/>
     </div>
-
-    <div class="mr-4">
-        <label for="role1">Choose Role:</label>
-        @foreach (var notificationRole in Notification.NotificationRoles)
-        {
-            <div class="d-flex mb-2 me-3">
-                <select @bind="notificationRole.RoleId" class="form-select" style="width: 160px;">
-                    @foreach (var role in Roles)
-                    {
-                        <option value="@role.RoleId">@role.Name</option>
-                    }
-                </select>
-                <button type="button" class="btn btn-danger ms-2" @onclick="@(() => Notification.NotificationRoles.Remove(notificationRole))">
-                    Remove
+    <br/>
+    <div class="d-flex">
+        <div class="mb-3 me-5">
+            <label for="role1" class="me-2">Choose Role:</label>
+            <div class="d-flex flex-column">
+                @foreach (var notificationRole in Notification.NotificationRoles)
+                {
+                    <div class="d-flex mb-2">
+                        <select @bind="notificationRole.RoleId" class="form-select" style="width: 160px;">
+                            @foreach (var role in Roles)
+                            {
+                                <option value="@role.RoleId">@role.Name</option>
+                            }
+                        </select>
+                        <button type="button" class="btn btn-danger ms-2" @onclick="@(() => Notification.NotificationRoles.Remove(notificationRole))">
+                            Remove
+                        </button>
+                    </div>
+                }
+                <button type="button" class="btn btn-primary mt-2" @onclick="@(() => Notification.NotificationRoles.Add(new NotificationRole { RoleId = 1 }))">
+                    Add Role +
                 </button>
             </div>
-        }
-        <button type="button" class="btn btn-primary" @onclick="@(() => Notification.NotificationRoles.Add(new NotificationRole { RoleId = 1 }))">
-            Add Role +
-        </button>
-    </div>
-
-    <div class="mr-4">
-        <label for="role1">Choose Users:</label>
-        @foreach (var notificationUser in Notification.NotificationUsers)
-        {
-            <div class="d-flex mb-2 me-3">
-                <select @bind="notificationUser.UserId" class="form-select" style="width: 160px;">
-                    @foreach (var user in Users)
-                    {
-                        <option value="@user.UserId">@user.FirstName @user.LastName</option>
-                    }
-                </select>
-                <button type="button" class="btn btn-danger ms-2" @onclick="@(() => Notification.NotificationUsers.Remove(notificationUser))">
-                    Remove
+        </div>
+        <div class="mb-4">
+            <label for="user1" class="me-2">Choose Users:</label>
+            <div class="d-flex flex-column">
+                @foreach (var notificationUser in Notification.NotificationUsers)
+                {
+                    <div class="d-flex mb-2">
+                        <select @bind="notificationUser.UserId" class="form-select" style="width: 160px;">
+                            @foreach (var user in Users)
+                            {
+                                <option value="@user.UserId">@user.FirstName @user.LastName</option>
+                            }
+                        </select>
+                        <button type="button" class="btn btn-danger ms-2" @onclick="@(() => Notification.NotificationUsers.Remove(notificationUser))">
+                            Remove
+                        </button>
+                    </div>
+                }
+                <button type="button" class="btn btn-primary mt-2" @onclick="@(() => Notification.NotificationUsers.Add(new NotificationUser { UserId = 1 }))">
+                    Add User +
                 </button>
             </div>
-        }
-        <button type="button" class="btn btn-primary" @onclick="@(() => Notification.NotificationUsers.Add(new NotificationUser { UserId = 1 }))">
-            Add Users
-        </button>
+        </div>
     </div>
+
 
     <button type="submit" class="btn btn-primary">Create</button>
 </EditForm>
@@ -118,7 +123,6 @@
             Users.Add(user);
         }
     }
-
 
     private async Task CreateNewNotification(EditContext editContext)
     {
