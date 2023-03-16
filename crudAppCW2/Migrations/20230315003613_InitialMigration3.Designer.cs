@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using crudAppCW2.Data;
 
@@ -10,9 +11,11 @@ using crudAppCW2.Data;
 namespace crudAppCW2.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230315003613_InitialMigration3")]
+    partial class InitialMigration3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.3");
@@ -83,26 +86,6 @@ namespace crudAppCW2.Migrations
                             DepartmentId = 10,
                             Name = "Superior Walls"
                         });
-                });
-
-            modelBuilder.Entity("crudAppCW2.Data.Models.Notification", b =>
-                {
-                    b.Property<int>("NotificationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Body")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Subject")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("NotificationId");
-
-                    b.ToTable("Notification");
                 });
 
             modelBuilder.Entity("crudAppCW2.Data.Models.NotificationRole", b =>
@@ -183,6 +166,23 @@ namespace crudAppCW2.Migrations
                     b.ToTable("UserRole");
                 });
 
+            modelBuilder.Entity("crudAppCW2.Models.Notification", b =>
+                {
+                    b.Property<int>("NotificationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("NotificationId");
+
+                    b.ToTable("Notification");
+                });
+
             modelBuilder.Entity("crudAppCW2.Models.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -224,7 +224,7 @@ namespace crudAppCW2.Migrations
 
             modelBuilder.Entity("crudAppCW2.Data.Models.NotificationRole", b =>
                 {
-                    b.HasOne("crudAppCW2.Data.Models.Notification", "Notification")
+                    b.HasOne("crudAppCW2.Models.Notification", "Notification")
                         .WithMany("NotificationRoles")
                         .HasForeignKey("NotificationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -243,7 +243,7 @@ namespace crudAppCW2.Migrations
 
             modelBuilder.Entity("crudAppCW2.Data.Models.NotificationUser", b =>
                 {
-                    b.HasOne("crudAppCW2.Data.Models.Notification", "Notification")
+                    b.HasOne("crudAppCW2.Models.Notification", "Notification")
                         .WithMany("NotificationUsers")
                         .HasForeignKey("NotificationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -298,13 +298,6 @@ namespace crudAppCW2.Migrations
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("crudAppCW2.Data.Models.Notification", b =>
-                {
-                    b.Navigation("NotificationRoles");
-
-                    b.Navigation("NotificationUsers");
-                });
-
             modelBuilder.Entity("crudAppCW2.Data.Models.Role", b =>
                 {
                     b.Navigation("NotificationRoles");
@@ -312,6 +305,13 @@ namespace crudAppCW2.Migrations
                     b.Navigation("UserRoles");
 
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("crudAppCW2.Models.Notification", b =>
+                {
+                    b.Navigation("NotificationRoles");
+
+                    b.Navigation("NotificationUsers");
                 });
 
             modelBuilder.Entity("crudAppCW2.Models.User", b =>
