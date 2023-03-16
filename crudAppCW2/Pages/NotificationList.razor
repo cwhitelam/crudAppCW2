@@ -1,73 +1,201 @@
 @page "/NotificationList"
 @using crudAppCW2.Data
 @using crudAppCW2.Data.Models
-@using Microsoft.EntityFrameworkCore;
+@using Microsoft.EntityFrameworkCore
+@inject IDbContextFactory<AppDbContext> ContextFactory
 
-<PageTitle>Notifications</PageTitle>
+<PageTitle>Notification List</PageTitle>
 
-<h3>Notifications</h3>
+<h3>Notification List</h3>
 
-@if (Notifications == null)
+@if (Notifications.Count == 0)
 {
-    <p>Loading notifications...</p>
-}
-else if (Notifications.Count == 0)
-{
-    <p>No notifications found.</p>
+    <p>No New Notifications...</p>
 }
 else
 {
-    <table class="table">
+    <ul class="pagination mt-3">
+        <li class="page-item @(CurrentPage == 1 ? "disabled" : "")">
+            <a class="page-link" @onclick="@(() => NavigateToPage(CurrentPage - 1))" tabindex="-1">Previous</a>
+        </li>
+        @for (int i = 1; i <= TotalPages; i++)
+        {
+            <li class="page-item @(CurrentPage == i ? "active" : "")">
+                <a class="page-link" @onclick="@(() => NavigateToPage(i))">@i</a>
+            </li>
+        }
+        <li class="page-item @(CurrentPage == TotalPages ? "disabled" : "")">
+            <a class="page-link" @onclick="@(() => NavigateToPage(CurrentPage + 1))">Next</a>
+        </li>
+    </ul>
+
+
+    <table class="table table-bordered table-striped">
         <thead>
         <tr>
+            <th>
+                <input type="checkbox" @onchange="SelectAll"/>
+            </th>
             <th>Subject</th>
             <th>Body</th>
-            <th>Role</th>
+            <th>Roles</th>
             <th>Users</th>
+            <th>
+                Read?
+                <input type="checkbox" @onchange="@(e => ToggleAllRead((bool)e.Value))"/>
+            </th>
+
+
+            <th>Time Created</th>
+            <th>Delete</th>
         </tr>
         </thead>
         <tbody>
         @foreach (var notification in Notifications)
         {
             <tr>
+                <td>
+                    <input type="checkbox" @bind="notification.IsSelected"/>
+                </td>
                 <td>@notification.Subject</td>
                 <td>@notification.Body</td>
-                @*<td>@notification.Role.Name</td>*@
                 <td>
-                    @*
-                    @foreach (var user in notification.Users)
-                    *@
-                    {
-                        @*
-                        <div>@user.User.FirstName @user.User.LastName</div>
-                    *@
+                    @{
+                        var roleNames = notification.NotificationRoles.Select(nr => nr.Role.Name);
+                        var rolesText = string.Join(", ", roleNames);
                     }
+                    @rolesText
+                </td>
+                <td>
+                    @{
+                        var userNames = notification.NotificationUsers.Select(nu => $"{nu.User.FirstName} {nu.User.LastName}");
+                        var usersText = string.Join(", ", userNames);
+                    }
+                    @usersText
+                </td>
+                <td>
+                    <input type="checkbox" @bind="notification.IsRead" @oninput="() => UpdateReadStatus(notification)"/>
+                </td>
+
+                <td>@notification.CreatedDateTime.ToString("MM/dd/yyyy - hh:mm:ss tt")</td>
+
+                <td>
+                    <button class="btn btn-danger" @onclick="() => DeleteNotification(notification)">Delete</button>
                 </td>
             </tr>
         }
         </tbody>
     </table>
+    <button class="btn btn-success" @onclick="CreateNotification">Create New Notification +</button>
+    <button class="btn btn-danger" @onclick="DeleteSelectedNotifications">Delete Selected -</button>
 }
 
 @code {
-    private List<Notification> Notifications { get; set; }
+    private IList<Notification> Notifications { get; set; }
+
+    private int PageSize { get; set; } = 10;
+    private int CurrentPage { get; set; } = 1;
+
+    private int TotalPages => (int)Math.Ceiling((double)Notifications.Count / PageSize);
+
+    private bool SelectAllRead { get; set; }
+
+    private void ToggleAllRead()
+    {
+        foreach (var notification in Notifications)
+        {
+            notification.IsRead = SelectAllRead;
+        }
+    }
+
+
+    private async Task LoadNotifications()
+    {
+        await using var context = await ContextFactory.CreateDbContextAsync();
+        Notifications = await context.Notification
+            .Include(n => n.NotificationRoles)
+            .ThenInclude(nr => nr.Role)
+            .Include(n => n.NotificationUsers)
+            .ThenInclude(nu => nu.User)
+            .Skip((CurrentPage - 1) * PageSize)
+            .Take(PageSize)
+            .ToListAsync();
+    }
+
+    private async Task NavigateToPage(int newPage)
+    {
+        if (newPage >= 1 && newPage <= TotalPages)
+        {
+            CurrentPage = newPage;
+            await LoadNotifications();
+        }
+    }
+
 
     [Inject]
-    private IDbContextFactory<AppDbContext> ContextFactory { get; set; }
+    private NavigationManager _navigationManager { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         await LoadNotifications();
     }
 
-    private async Task LoadNotifications()
+    private async Task UpdateReadStatus(Notification notification)
+    {
+        notification.IsRead = !notification.IsRead;
+        await using var context = await ContextFactory.CreateDbContextAsync();
+        context.Notification.Update(notification);
+        await context.SaveChangesAsync();
+    }
+
+
+    private async Task DeleteNotification(Notification notification)
     {
         await using var context = await ContextFactory.CreateDbContextAsync();
-        /*Notifications = await context.Notification
-            .Include(n => n.Role)
-            .Include(n => n.Users)
-            .ThenInclude(nu => nu.User)
-            .ToListAsync();*/
+        context.Notification.Remove(notification);
+        await context.SaveChangesAsync();
+        await LoadNotifications();
+    }
+
+    private async Task DeleteSelectedNotifications()
+    {
+        var selectedNotifications = Notifications.Where(n => n.IsSelected).ToList();
+        await using var context = await ContextFactory.CreateDbContextAsync();
+        context.Notification.RemoveRange(selectedNotifications);
+        await context.SaveChangesAsync();
+        await LoadNotifications();
+    }
+
+    private void SelectAll(ChangeEventArgs e)
+    {
+        bool isChecked = (bool)e.Value;
+        foreach (var notification in Notifications)
+        {
+            notification.IsSelected = isChecked;
+        }
+    }
+
+    private async Task ToggleAllRead(bool isChecked)
+    {
+        foreach (var notification in Notifications)
+        {
+            notification.IsRead = isChecked;
+        }
+
+        await using var context = await ContextFactory.CreateDbContextAsync();
+        context.Notification.UpdateRange(Notifications);
+        await context.SaveChangesAsync();
+    }
+
+
+    private void CreateUsers()
+    {
+        _navigationManager.NavigateTo("/Users");
+    }
+
+    private void CreateNotification()
+    {
+        _navigationManager.NavigateTo("/CreateNotification");
     }
 
 }
