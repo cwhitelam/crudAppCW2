@@ -6,14 +6,21 @@
     <projectFile profileName="https">crudAppCW2/crudAppCW2.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f8cdaa88-c30e-4229-be83-2cf0d05911bb" name="Changes" comment="update dbcontext">
-      <change afterPath="$PROJECT_DIR$/crudAppCW2/Data/Models/CreateNotificationModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crudAppCW2/Data/Models/Notification.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crudAppCW2/Pages/CreateNotification.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crudAppCW2/Pages/NotificationList.razor" afterDir="false" />
+    <list default="true" id="f8cdaa88-c30e-4229-be83-2cf0d05911bb" name="Changes" comment="update page title to 'Create New User'">
+      <change afterPath="$PROJECT_DIR$/crudAppCW2/Data/Models/NotificationRole.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crudAppCW2/Data/Models/NotificationUser.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.crudAppCW2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.crudAppCW2/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crudAppCW2/Data/Models/Department.cs" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Data/Models/Department.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crudAppCW2/Data/Models/Notification.cs" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Data/Models/Notification.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crudAppCW2/Data/Models/Role.cs" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Data/Models/Role.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crudAppCW2/Data/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Data/Models/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crudAppCW2/Data/Models/UserRole.cs" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Data/Models/UserRole.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crudAppCW2/Data/crudAppDb.sqlite-shm" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Data/crudAppDb.sqlite-shm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crudAppCW2/Data/crudAppDb.sqlite-wal" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Data/crudAppDb.sqlite-wal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crudAppCW2/Pages/DeletedUsers.razor" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Pages/DeletedUsers.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crudAppCW2/Pages/EditUser.razor" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Pages/EditUser.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crudAppCW2/Pages/NotificationList.razor" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Pages/NotificationList.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crudAppCW2/Pages/Users.razor" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Pages/Users.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crudAppCW2/Shared/NavMenu.razor" beforeDir="false" afterPath="$PROJECT_DIR$/crudAppCW2/Shared/NavMenu.razor" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -39,36 +46,14 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3a1cdd6f5720cf36ceab85555317e2ed3e9876710af968575b24af199deb0/HttpsRedirectionBuilderExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/eeaf281031b3ffe3d44a91e71a5808c8d236a9caabbb947871e6dc415bd8b/Migration.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Data/AppDbContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Data/AppDbContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Data/AppDbContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Data/AppDbContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Data/Models/Department.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Data/Models/Role.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Data/Models/User.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Data/Models/User.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Migrations/AppDbContextModelSnapshot.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Migrations/AppDbContextModelSnapshot.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/CreateNotification.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/CreateNotification.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/CreateUser.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/CreateUser.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/CreateUser.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/DeletedUsers.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/EditUser.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/EditUser.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/EditUser.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/EditUser.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/Home.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/Home.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/Home.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/Home.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/Users.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/Users.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Pages/Users.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/crudAppCW2/Pages/_Host.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Shared/NavMenu.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Shared/NavMenu.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Shared/NavMenu.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/cwhitelam/crudAppCW/crudAppCW2/Shared/NavMenu.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/crudAppCW2/obj/Debug/net7.0/.NETCoreApp,Version=v7.0.AssemblyAttributes.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -168,105 +153,12 @@
       <workItem from="1678139709739" duration="17647000" />
       <workItem from="1678237804269" duration="5662000" />
       <workItem from="1678314249515" duration="10463000" />
-      <workItem from="1678452097305" duration="30707000" />
-    </task>
-    <task id="LOCAL-00037" summary="commit updates">
-      <created>1677536843626</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1677536843626</updated>
-    </task>
-    <task id="LOCAL-00038" summary="changed entities for config">
-      <created>1677716128162</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1677716128162</updated>
-    </task>
-    <task id="LOCAL-00039" summary="add 'Back' button to return to Users.razor">
-      <created>1677716168458</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1677716168459</updated>
-    </task>
-    <task id="LOCAL-00040" summary="EditUser still wont update form values, needs debug">
-      <created>1677716213138</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1677716213138</updated>
-    </task>
-    <task id="LOCAL-00041" summary="delete">
-      <created>1677716226566</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1677716226566</updated>
-    </task>
-    <task id="LOCAL-00042" summary="no commit">
-      <created>1677716248510</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1677716248510</updated>
-    </task>
-    <task id="LOCAL-00043" summary="fixed Role and Dept value visual on Table&#10;added pagination to show 4 values @ time">
-      <created>1677716319920</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1677716319920</updated>
-    </task>
-    <task id="LOCAL-00044" summary="commit">
-      <created>1677716328169</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1677716328169</updated>
-    </task>
-    <task id="LOCAL-00045" summary="commit">
-      <created>1677716435923</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1677716435923</updated>
-    </task>
-    <task id="LOCAL-00046" summary="modify Index.razor">
-      <created>1677716669763</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1677716669763</updated>
-    </task>
-    <task id="LOCAL-00047" summary="commit">
-      <created>1677716807695</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1677716807695</updated>
-    </task>
-    <task id="LOCAL-00048" summary="update to look like .md file">
-      <created>1677718358366</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1677718358366</updated>
-    </task>
-    <task id="LOCAL-00049" summary="update to look like .md file">
-      <created>1677718395493</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1677718395493</updated>
-    </task>
-    <task id="LOCAL-00050" summary="update Index.razor">
-      <created>1677718720239</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1677718720240</updated>
+      <workItem from="1678452097305" duration="32166000" />
+      <workItem from="1678560279882" duration="12970000" />
+      <workItem from="1678753324062" duration="6855000" />
+      <workItem from="1678830533645" duration="9960000" />
+      <workItem from="1678841520754" duration="3125000" />
+      <workItem from="1678999312443" duration="9167000" />
     </task>
     <task id="LOCAL-00051" summary="update Dept table">
       <created>1677803630220</created>
@@ -513,7 +405,105 @@
       <option name="project" value="LOCAL" />
       <updated>1678507753801</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="add CreateNotification.razor">
+      <created>1678507799830</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1678507799830</updated>
+    </task>
+    <task id="LOCAL-00087" summary="add new notification classes">
+      <created>1678507828656</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1678507828656</updated>
+    </task>
+    <task id="LOCAL-00088" summary="commit update">
+      <created>1678507984030</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1678507984030</updated>
+    </task>
+    <task id="LOCAL-00089" summary="Remigrate Tables">
+      <created>1678839039821</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1678839039821</updated>
+    </task>
+    <task id="LOCAL-00090" summary="delete and remigrate tables">
+      <created>1678839080191</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1678839080191</updated>
+    </task>
+    <task id="LOCAL-00091" summary="reconfig dbcontext">
+      <created>1678839358049</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1678839358049</updated>
+    </task>
+    <task id="LOCAL-00092" summary="commit">
+      <created>1678839369269</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1678839369269</updated>
+    </task>
+    <task id="LOCAL-00093" summary="update CreateNotification.razor">
+      <created>1678839396252</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1678839396252</updated>
+    </task>
+    <task id="LOCAL-00094" summary="update commit">
+      <created>1678839419585</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1678839419585</updated>
+    </task>
+    <task id="LOCAL-00095" summary="migrations commit">
+      <created>1679004692009</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1679004692009</updated>
+    </task>
+    <task id="LOCAL-00096" summary="update role|dept selection form">
+      <created>1679004733924</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1679004733924</updated>
+    </task>
+    <task id="LOCAL-00097" summary="migrations commit">
+      <created>1679010143577</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1679010143577</updated>
+    </task>
+    <task id="LOCAL-00098" summary="update features for CreateNotification">
+      <created>1679010206186</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1679010206186</updated>
+    </task>
+    <task id="LOCAL-00099" summary="update page title to 'Create New User'">
+      <created>1679010250454</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1679010250455</updated>
+    </task>
+    <option name="localTasksCounter" value="100" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -535,19 +525,6 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="changed href to github link" />
-    <MESSAGE value="update h3 tag" />
-    <MESSAGE value="add create user button to NavMenu" />
-    <MESSAGE value="remove migrations" />
-    <MESSAGE value="update migrations | seed database" />
-    <MESSAGE value="renamed Role and Dept options" />
-    <MESSAGE value="removed unused methods" />
-    <MESSAGE value="update classes" />
-    <MESSAGE value="edit bugs fixed | page working" />
-    <MESSAGE value="commits" />
-    <MESSAGE value="replaced hardcode with database value" />
-    <MESSAGE value="add 'back to users' button" />
-    <MESSAGE value="commit" />
     <MESSAGE value="update CreateUser.razor page" />
     <MESSAGE value="db commit" />
     <MESSAGE value="add DeletedUsers.razor page" />
@@ -560,7 +537,20 @@
     <MESSAGE value="other commmits" />
     <MESSAGE value="commit migrations" />
     <MESSAGE value="update dbcontext" />
-    <option name="LAST_COMMIT_MESSAGE" value="update dbcontext" />
+    <MESSAGE value="add CreateNotification.razor" />
+    <MESSAGE value="add new notification classes" />
+    <MESSAGE value="commit update" />
+    <MESSAGE value="Remigrate Tables" />
+    <MESSAGE value="delete and remigrate tables" />
+    <MESSAGE value="reconfig dbcontext" />
+    <MESSAGE value="commit" />
+    <MESSAGE value="update CreateNotification.razor" />
+    <MESSAGE value="update commit" />
+    <MESSAGE value="update role|dept selection form" />
+    <MESSAGE value="migrations commit" />
+    <MESSAGE value="update features for CreateNotification" />
+    <MESSAGE value="update page title to 'Create New User'" />
+    <option name="LAST_COMMIT_MESSAGE" value="update page title to 'Create New User'" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
