@@ -19,15 +19,16 @@ else
     <form>
         <div class="form-group">
             <label for="firstName">First Name</label>
-            <input type="text" class="form-control" style="width: 450px;" id="firstName" @bind="User.FirstName" @oninput="UpdateUser"/>
+            <input type="text" class="form-control" style="width: 450px;" id="firstName" @bind="User.FirstName"/>
+
         </div>
         <div class="form-group">
             <label for="lastName">Last Name</label>
-            <input type="text" class="form-control" style="width: 450px;" id="lastName" @bind="User.LastName" @oninput="UpdateUser"/>
+            <input type="text" class="form-control" style="width: 450px;" id="lastName" @bind="User.LastName"/>
         </div>
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" class="form-control" style="width: 450px;" id="email" @bind="User.Email" @oninput="UpdateUser"/>
+            <input type="email" class="form-control" style="width: 450px;" id="email" @bind="User.Email"/>
         </div>
         <div class="form-group d-flex">
             <div class="mr-4">
@@ -52,7 +53,7 @@ else
             </div>
 
             <div>
-                <label for="role2">Choose Department:</label>
+                <label for="department2">Choose Department:</label>
                 <select @bind="User.DepartmentId" class="form-select" style="width: 290px;">
                     @foreach (var department in Departments)
                     {
@@ -63,7 +64,7 @@ else
         </div>
 
         <br/>
-        <button class="btn btn-primary" @onclick="UpdateUser">Update</button>
+        <button type="button" class="btn btn-primary" @onclick="UpdateUser">Update</button>
     </form>
 }
 
@@ -71,6 +72,9 @@ else
     private User User { get; set; }
     private List<Department> Departments { get; set; }
     private List<Role> Roles { get; set; }
+
+    [Inject]
+    private NavigationManager _navigationManager { get; set; }
 
     [Parameter]
     public int Id { get; set; }
@@ -97,8 +101,10 @@ else
         {
             return;
         }
-        
-        // Retrieve the selected Role and Department objects
+
+        CapitalizeName(User, u => u.FirstName, (u, value) => u.FirstName = value);
+        CapitalizeName(User, u => u.LastName, (u, value) => u.LastName = value);
+
         await using var context = ContextFactory.CreateDbContext();
 
         var userRoles = await context.UserRole.Where(x => x.UserId == User.UserId).ToListAsync();
@@ -112,14 +118,40 @@ else
             if (User.UserRoles.Any(x => x.RoleId == userRole.RoleId)) continue;
             context.UserRole.Remove(userRole);
         }
-        
-        // Update the User object with the selected Role and Department
+
         User.Department = await context.Department.FirstOrDefaultAsync(d => d.DepartmentId == User.DepartmentId);
 
         User.UserRoles.Clear();
         context.User.Update(User);
         await context.SaveChangesAsync();
 
-        //NavigationManager.NavigateTo("/Users");
+        NavigationManager.NavigateTo("/Users");
     }
+
+
+    private void CapitalizeName(User user, Func<User, string> nameSelector, Action<User, string> nameSetter)
+    {
+        var name = nameSelector(user);
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            return;
+        }
+
+        var words = name.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+        for (int i = 0; i < words.Length; i++)
+        {
+            var word = words[i];
+            words[i] = char.ToUpper(word[0]) + word.Substring(1).ToLower();
+        }
+
+        name = string.Join(" ", words);
+        nameSetter(user, name);
+    }
+
+    private void CreateUsers()
+    {
+        _navigationManager.NavigateTo("/Users");
+    }
+
 }
