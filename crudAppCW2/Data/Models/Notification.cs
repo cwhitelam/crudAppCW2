@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace crudAppCW2.Data.Models
@@ -5,8 +6,11 @@ namespace crudAppCW2.Data.Models
     public class Notification
     {
         public int NotificationId { get; set; }
-        public string? Body { get; set; }
-        public string? Subject { get; set; }
+        
+        [Required(ErrorMessage = "Please enter Body")]        
+        public string? Description { get; set; }
+        [Required(ErrorMessage = "Please enter a Subject")]
+        public string? Title { get; set; }
         public bool IsRead { get; set; }
         [NotMapped]
         public bool IsSelected { get; set; }

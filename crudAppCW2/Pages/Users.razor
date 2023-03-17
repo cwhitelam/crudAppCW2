@@ -70,7 +70,7 @@ else
     <br/>
     <td>
         <button class="btn btn-success" @onclick="NavigateToCreateUser">Create New User +</button>
-        <button class="btn btn-danger" @onclick="NavigateToRestoreUser">Restore Deleted User</button>
+        <button class="btn btn-danger" @onclick="NavigateToRestoreUser">Restore Deleted User(s)</button>
 
     </td>
 }
@@ -80,8 +80,8 @@ else
 
     [Parameter]
     public int? CurrentPage { get; set; }
-
-        private const int ItemsPerPage = 5;
+        
+        private const int ItemsPerPage = 3;
 
     private int TotalPages { get; set; }
 
@@ -171,5 +171,4 @@ else
             NavigationManager.NavigateTo($"/Users/{page}");
         }
     }
-
 }   

@@ -3,6 +3,7 @@
 @using crudAppCW2.Data
 @using crudAppCW2.Data.Models
 @using Microsoft.EntityFrameworkCore
+@using System.Linq
 @inject IDbContextFactory<AppDbContext> ContextFactory
 @inject NavigationManager NavigationManager
 
@@ -22,15 +23,15 @@
     <ValidationSummary/>
 
     <div class="form-group">
-        <label for="subject">Subject:</label>
-        <InputText id="subject" class="form-control" @bind-Value="Notification.Subject"/>
-        <ValidationMessage For="@(() => Notification.Subject)"/>
+        <label for="subject">Title:</label>
+        <InputText id="subject" class="form-control" @bind-Value="Notification.Title"/>
+        <ValidationMessage For="@(() => Notification.Title)"/>
     </div>
 
     <div class="form-group">
-        <label for="body">Body:</label>
-        <InputTextArea id="body" class="form-control" @bind-Value="Notification.Body"/>
-        <ValidationMessage For="@(() => Notification.Body)"/>
+        <label for="body">Description:</label>
+        <InputTextArea id="body" class="form-control" @bind-Value="Notification.Description"/>
+        <ValidationMessage For="@(() => Notification.Description)"/>
     </div>
     <br/>
     <div class="d-flex">
@@ -82,6 +83,8 @@
 
 
     <button type="submit" class="btn btn-primary">Create</button>
+    <button type="button" class="btn btn-secondary" @onclick="NavigateBack">Back</button>
+
 </EditForm>
 
 @code {
@@ -94,6 +97,9 @@
 
     private IList<Role> Roles { get; set; } = new List<Role>();
     private IList<User> Users { get; set; } = new List<User>();
+
+    [Inject]
+    private NavigationManager _navigationManager { get; set; }
 
     private bool NotificationCreated { get; set; }
 
@@ -117,13 +123,14 @@
     private async Task LoadUsers()
     {
         await using var context = await ContextFactory.CreateDbContextAsync();
-        var users = await context.User.ToListAsync();
+        var users = await context.User.OrderBy(u => u.FirstName).ToListAsync();
         Users.Clear();
         foreach (var user in users)
         {
             Users.Add(user);
         }
     }
+
 
     private async Task CreateNewNotification(EditContext editContext)
     {
@@ -136,8 +143,8 @@
     // Create the notification
         var notification = new Notification
         {
-            Subject = Notification.Subject,
-            Body = Notification.Body,
+            Title = Notification.Title,
+            Description = Notification.Description,
             CreatedDateTime = DateTime.Now,
             NotificationRoles = Notification.NotificationRoles,
             NotificationUsers = Notification.NotificationUsers
@@ -149,6 +156,11 @@
 
     // Navigate to the notification list page
         NavigationManager.NavigateTo("/NotificationList");
+    }
+
+    private void NavigateBack()
+    {
+        _navigationManager.NavigateTo("/NotificationList");
     }
 
 

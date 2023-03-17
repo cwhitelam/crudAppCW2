@@ -10,7 +10,7 @@
 <PageTitle>Create User</PageTitle>
 
 <h3>Create New User</h3>
-<br/>
+
 <EditForm Model="@User" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
     <DataAnnotationsValidator/>
     <ValidationSummary/>
@@ -119,7 +119,10 @@
         {
             if (User is not null)
             {
-                // User.RoleId = User.RoleId; // Set RoleId
+    // Capitalize first and last name before saving
+                CapitalizeName(User, u => u.FirstName, (u, value) => u.FirstName = value);
+                CapitalizeName(User, u => u.LastName, (u, value) => u.LastName = value);
+
                 User.DepartmentId = User.DepartmentId; // Set DepartmentId
 
                 await using var context = await ContextFactory.CreateDbContextAsync();
@@ -150,6 +153,7 @@
             IsBusy = false;
         }
     }
+
 
     private void CapitalizeName(User user, Func<User, string> nameSelector, Action<User, string> nameSetter)
     {

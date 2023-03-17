@@ -36,14 +36,10 @@ else
             <th>
                 <input type="checkbox" @onchange="SelectAll"/>
             </th>
-            <th>Subject</th>
-            <th>Body</th>
+            <th>Title</th>
+            <th>Description</th>
             <th>Roles</th>
             <th>Users</th>
-            <th>
-                Read?
-                <input type="checkbox" @onchange="@(e => ToggleAllRead((bool)e.Value))"/>
-            </th>
 
 
             <th>Time Created</th>
@@ -57,8 +53,8 @@ else
                 <td>
                     <input type="checkbox" @bind="notification.IsSelected"/>
                 </td>
-                <td>@notification.Subject</td>
-                <td>@notification.Body</td>
+                <td>@notification.Title</td>
+                <td>@notification.Description</td>
                 <td>
                     @{
                         var roleNames = notification.NotificationRoles.Select(nr => nr.Role.Name);
@@ -73,10 +69,6 @@ else
                     }
                     @usersText
                 </td>
-                <td>
-                    <input type="checkbox" @bind="notification.IsRead" @oninput="() => UpdateReadStatus(notification)"/>
-                </td>
-
                 <td>@notification.CreatedDateTime.ToString("MM/dd/yyyy - hh:mm:ss tt")</td>
 
                 <td>
@@ -97,17 +89,6 @@ else
     private int CurrentPage { get; set; } = 1;
 
     private int TotalPages => (int)Math.Ceiling((double)Notifications.Count / PageSize);
-
-    private bool SelectAllRead { get; set; }
-
-    private void ToggleAllRead()
-    {
-        foreach (var notification in Notifications)
-        {
-            notification.IsRead = SelectAllRead;
-        }
-    }
-
 
     private async Task LoadNotifications()
     {
@@ -140,15 +121,6 @@ else
         await LoadNotifications();
     }
 
-    private async Task UpdateReadStatus(Notification notification)
-    {
-        notification.IsRead = !notification.IsRead;
-        await using var context = await ContextFactory.CreateDbContextAsync();
-        context.Notification.Update(notification);
-        await context.SaveChangesAsync();
-    }
-
-
     private async Task DeleteNotification(Notification notification)
     {
         await using var context = await ContextFactory.CreateDbContextAsync();
@@ -173,18 +145,6 @@ else
         {
             notification.IsSelected = isChecked;
         }
-    }
-
-    private async Task ToggleAllRead(bool isChecked)
-    {
-        foreach (var notification in Notifications)
-        {
-            notification.IsRead = isChecked;
-        }
-
-        await using var context = await ContextFactory.CreateDbContextAsync();
-        context.Notification.UpdateRange(Notifications);
-        await context.SaveChangesAsync();
     }
 
 
