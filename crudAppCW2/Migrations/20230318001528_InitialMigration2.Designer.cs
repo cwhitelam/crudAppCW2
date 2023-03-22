@@ -11,8 +11,8 @@ using crudAppCW2.Data;
 namespace crudAppCW2.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230317172219_RefactorMigration1")]
-    partial class RefactorMigration1
+    [Migration("20230318001528_InitialMigration2")]
+    partial class InitialMigration2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

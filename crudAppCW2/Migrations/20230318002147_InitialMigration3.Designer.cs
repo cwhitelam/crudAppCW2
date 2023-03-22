@@ -11,8 +11,8 @@ using crudAppCW2.Data;
 namespace crudAppCW2.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230317165756_InitialMigration11")]
-    partial class InitialMigration11
+    [Migration("20230318002147_InitialMigration3")]
+    partial class InitialMigration3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -94,17 +94,17 @@ namespace crudAppCW2.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Body")
-                        .IsRequired()
+                    b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("CreatedDateTime")
+                    b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsRead")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Subject")
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

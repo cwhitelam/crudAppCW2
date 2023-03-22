@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
+
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
 namespace crudAppCW2.Migrations
 {
@@ -29,10 +32,10 @@ namespace crudAppCW2.Migrations
                 {
                     NotificationId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    RoleId = table.Column<int>(type: "INTEGER", nullable: true),
-                    UserId = table.Column<int>(type: "INTEGER", nullable: true),
-                    Body = table.Column<string>(type: "TEXT", nullable: true),
-                    Subject = table.Column<string>(type: "TEXT", nullable: true)
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Title = table.Column<string>(type: "TEXT", nullable: false),
+                    IsRead = table.Column<bool>(type: "INTEGER", nullable: false),
+                    CreatedDateTime = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -88,8 +91,8 @@ namespace crudAppCW2.Migrations
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     IsRestored = table.Column<bool>(type: "INTEGER", nullable: false),
                     IsSelected = table.Column<bool>(type: "INTEGER", nullable: false),
-                    RoleId = table.Column<int>(type: "INTEGER", nullable: false),
-                    DepartmentId = table.Column<int>(type: "INTEGER", nullable: true)
+                    DepartmentId = table.Column<int>(type: "INTEGER", nullable: true),
+                    RoleId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -104,8 +107,7 @@ namespace crudAppCW2.Migrations
                         name: "FK_User_Role_RoleId",
                         column: x => x.RoleId,
                         principalTable: "Role",
-                        principalColumn: "RoleId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "RoleId");
                 });
 
             migrationBuilder.CreateTable(
@@ -155,6 +157,32 @@ namespace crudAppCW2.Migrations
                         principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Department",
+                columns: new[] { "DepartmentId", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Admin" },
+                    { 2, "Commercial" },
+                    { 3, "Engineering" },
+                    { 4, "Fabrication" },
+                    { 5, "Golf Course" },
+                    { 6, "Human Resources" },
+                    { 7, "IT" },
+                    { 8, "Maintenance" },
+                    { 9, "Sales" },
+                    { 10, "Superior Walls" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Role",
+                columns: new[] { "RoleId", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Admin" },
+                    { 2, "User" }
                 });
 
             migrationBuilder.CreateIndex(
