@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using crudAppCW2.Models;
 
 namespace crudAppCW2.Data.Models;
 
