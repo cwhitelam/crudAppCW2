@@ -1,5 +1,3 @@
-using crudAppCW2.Models;
-
 namespace crudAppCW2.Data.Models;
 
 public class NotificationUser
