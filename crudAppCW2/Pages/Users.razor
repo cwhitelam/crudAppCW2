@@ -1,15 +1,15 @@
-﻿@page "/Users"
-@page "/Users/{currentPage:int?}"
-@using crudAppCW2.Models
+﻿@page "/Users/{currentPage:int?}"
 @using crudAppCW2.Data
+@using crudAppCW2.Data.Models
 @using Microsoft.EntityFrameworkCore
 @inject IDbContextFactory<AppDbContext> ContextFactory
+@inject NavigationManager NavigationManager
 
 <PageTitle>Users</PageTitle>
 
 <h3>Users</h3>
 
-@if (UsersTable == null)
+@if (UsersTable.Count == 0)
 {
     <p>Loading...</p>
 }
@@ -19,83 +19,77 @@ else
         <li class="page-item @(CurrentPage == 1 ? "disabled" : "")">
             <a class="page-link" @onclick="@(() => NavigateToPage(CurrentPage - 1))" tabindex="-1">Previous</a>
         </li>
-        @for (int i = 1; i <= TotalPages; i++)
+        @foreach (var pageNumber in PageNumbers)
         {
-            <li class="page-item @(CurrentPage == i ? "active" : "")">
-                <a class="page-link" @onclick="@(() => NavigateToPage(i))">@i</a>
+            <li class="page-item @(CurrentPage == pageNumber ? "active" : "")">
+                <a class="page-link" @onclick="@(() => NavigateToPage(pageNumber))">@pageNumber</a> @*using direct method call for page number*@ 
             </li>
         }
         <li class="page-item @(CurrentPage == TotalPages ? "disabled" : "")">
             <a class="page-link" @onclick="@(() => NavigateToPage(CurrentPage + 1))">Next</a>
         </li>
     </ul>
-
-    <table class="table table-bordered table-striped">
-        <thead>
-        <tr>
-            <th>User</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Department</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var User in UsersTable)
-        {
-            <tr>
-                <td>@User.GetCapitalizedString(User.FirstName) @User.GetCapitalizedString(User.LastName)</td>
-                <td>@User.Email</td>
-                <td>
-                    @foreach (var userRole in User.UserRoles)
-                    {
-                        <div class="me-1">
-                            @userRole.Role?.Name
-                        </div>
-                    }
-                </td>
-                <td>
-                    @User.Department?.Name
-                </td>
-                <td>
-                    <button class="btn btn-danger" @onclick="async () => await DeleteUser(User.UserId)">Delete</button>
-                    <button class="btn btn-primary" @onclick="(() => EditUser(User.UserId))">Edit</button>
-                </td>
-            </tr>
-        }
-
-
-        </tbody>
-    </table>
-
-    <br/>
-    <td>
-        <button class="btn btn-success" @onclick="NavigateToCreateUser">Create New User +</button>
-        <button class="btn btn-danger" @onclick="NavigateToRestoreUser">Restore Deleted User(s)</button>
-
-    </td>
 }
 
+
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>User</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Department</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var user in UsersTable)
+    {
+        <tr>
+            <td>@User.GetCapitalizedString(user.FirstName) @User.GetCapitalizedString(user.LastName)</td>
+            <td>@user.Email</td>
+            <td>
+                @foreach (var userRole in user.UserRoles)
+                {
+                    <div class="me-1">
+                        @userRole.Role?.Name
+                    </div>
+                }
+            </td>
+            <td>
+                @user.Department?.Name
+            </td>
+            <td>
+                <button class="btn btn-danger" @onclick="async () => await DeleteUser(user.UserId)">Delete</button>
+                <button class="btn btn-primary" @onclick="(() => EditUser(user.UserId))">Edit</button>
+            </td>
+        </tr>
+    }
+
+
+    </tbody>
+</table>
+
+<br/>
+<td>
+    <button class="btn btn-success" @onclick="@NavigateToCreateUser">Create New User +</button>
+    <button class="btn btn-danger" @onclick="@NavigateToRestoreUser">Restore Deleted User(s)</button>
+
+</td>
+
 @code {
-    private List<User> UsersTable { get; set; }
+    private List<User> UsersTable { get; set; } = null!;
 
     [Parameter]
     public int? CurrentPage { get; set; }
-        
-        private const int ItemsPerPage = 3;
+
+        private const int ItemsPerPage = 4;
 
     private int TotalPages { get; set; }
-
-
-    [Inject]
-    private NavigationManager NavigationManager { get; set; }
-
+    private List<int> PageNumbers { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
-        if (CurrentPage == null)
-        {
-            CurrentPage = 1;
-        }
+        CurrentPage ??= 1;
 
         await LoadData();
     }
@@ -115,9 +109,10 @@ else
             return;
         }
 
-        await using var context = ContextFactory.CreateDbContext();
+        await using var context = await ContextFactory.CreateDbContextAsync();
         var userCount = await context.User.CountAsync();
         TotalPages = userCount == 0 ? 1 : (int)Math.Ceiling((double)userCount / ItemsPerPage);
+        PageNumbers = Enumerable.Range(1, TotalPages).ToList();
 
         if (CurrentPage > TotalPages)
         {
@@ -131,7 +126,7 @@ else
             .Include(x => x.Department)
             .Include(x => x.UserRoles).ThenInclude(x => x.Role)
             .Where(x => !x.IsRestored)
-            .OrderBy(u => u.FirstName.ToLower())
+            .OrderBy(u => u.FirstName!.ToLower())
             .Skip(itemsToSkip)
             .Take(ItemsPerPage)
             .ToListAsync();
@@ -139,7 +134,7 @@ else
 
     private async Task DeleteUser(int id)
     {
-        await using var context = ContextFactory.CreateDbContext();
+        await using var context = await ContextFactory.CreateDbContextAsync();
         var userToDelete = await context.User.FirstOrDefaultAsync(u => u.UserId == id);
         if (userToDelete != null)
         {
@@ -166,9 +161,10 @@ else
 
     private void NavigateToPage(int? page)
     {
-        if (page.HasValue && page.Value >= 1 && page.Value <= TotalPages)
+        if (page is >= 1 && page.Value <= TotalPages)
         {
             NavigationManager.NavigateTo($"/Users/{page}");
         }
     }
-}   
+
+}
