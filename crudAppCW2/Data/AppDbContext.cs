@@ -1,5 +1,4 @@
 using crudAppCW2.Data.Models;
-using crudAppCW2.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace crudAppCW2.Data;
@@ -49,10 +48,11 @@ public class AppDbContext : DbContext
             .Property(u => u.DepartmentId)
             .IsRequired(false);
         modelBuilder.Entity<User>()
-            .HasOne(u => u.Department)
+            .HasOne<Department>(u => u.Department)
             .WithMany(d => d.Users)
             .HasForeignKey(u => u.DepartmentId)
             .OnDelete(DeleteBehavior.Cascade);
+
 
         // Configure Department entity
         modelBuilder.Entity<Department>()
@@ -61,7 +61,7 @@ public class AppDbContext : DbContext
             .Property(d => d.Name)
             .IsRequired();
         modelBuilder.Entity<Department>().HasData(
-            new Department { DepartmentId = 1, Name = "Admin" },
+            new Department { DepartmentId = 1, Name = "Administration" },
             new Department { DepartmentId = 2, Name = "Commercial" },
             new Department { DepartmentId = 3, Name = "Engineering" },
             new Department { DepartmentId = 4, Name = "Fabrication" },
@@ -88,10 +88,11 @@ public class AppDbContext : DbContext
             .HasKey(ur => new { ur.UserId, ur.RoleId });
 
         modelBuilder.Entity<UserRole>()
-            .HasOne(ur => ur.User)
+            .HasOne<User>(ur => ur.User)
             .WithMany(u => u.UserRoles)
             .HasForeignKey(ur => ur.UserId)
             .OnDelete(DeleteBehavior.Cascade);
+
 
         modelBuilder.Entity<UserRole>()
             .HasOne(ur => ur.Role)
