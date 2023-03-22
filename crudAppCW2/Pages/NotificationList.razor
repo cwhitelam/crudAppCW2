@@ -3,6 +3,7 @@
 @using crudAppCW2.Data.Models
 @using Microsoft.EntityFrameworkCore
 @inject IDbContextFactory<AppDbContext> ContextFactory
+@inject NavigationManager NavigationManager
 
 <PageTitle>Notification List</PageTitle>
 
@@ -83,7 +84,7 @@ else
 }
 
 @code {
-    private IList<Notification> Notifications { get; set; }
+    private IList<Notification> Notifications { get; set; } = new List<Notification>();
 
     private int PageSize { get; set; } = 10;
     private int CurrentPage { get; set; } = 1;
@@ -111,10 +112,6 @@ else
             await LoadNotifications();
         }
     }
-
-
-    [Inject]
-    private NavigationManager _navigationManager { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -147,15 +144,9 @@ else
         }
     }
 
-
-    private void CreateUsers()
-    {
-        _navigationManager.NavigateTo("/Users");
-    }
-
     private void CreateNotification()
     {
-        _navigationManager.NavigateTo("/CreateNotification");
+        NavigationManager.NavigateTo("/CreateNotification");
     }
 
 }
