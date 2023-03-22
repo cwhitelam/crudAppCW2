@@ -1,0 +1,130 @@
+@page "/NotificationRecipient"
+@using crudAppCW2.Data
+@using crudAppCW2.Data.Models
+@using Microsoft.EntityFrameworkCore
+@inject IDbContextFactory<AppDbContext> ContextFactory
+
+<PageTitle>Notification Recipient</PageTitle>
+
+<h3>Notification Recipient List</h3>
+
+@if (Notifications.Count == 0)
+{
+    <p>No Notifications Available...</p>
+}
+else
+{
+    <div>
+        <label for="notificationDropdown">Select Notification:</label>
+        <select id="notificationDropdown" class="form-select" @bind="@SelectedNotificationId">
+            <option value="0">Select</option>
+            @foreach (var notification in Notifications)
+            {
+                <option value="@notification.NotificationId">@notification.Title</option>
+            }
+        </select>
+    </div>
+
+
+@if (SelectedNotification != null)
+{
+    <h4 class="mt-2">
+        Recipient(s) for:
+        <strong>
+            <u>@SelectedNotification.Title</u>
+        </strong>
+    </h4>
+}
+    <table class="table table-bordered table-striped mt-3">
+        <thead>
+        <tr>
+            <th>UserId</th>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var user in UsersWithAssignedRoles())
+        {
+            <tr>
+                <td>@user.UserId</td>
+                <td>@user.FirstName @user.LastName</td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+}
+
+@code {
+    private IList<Notification> Notifications { get; set; } = new List<Notification>();
+    private Notification? SelectedNotification { get; set; }
+    private int _selectedNotificationId;
+    private IList<User>? AllUsers { get; set; }
+
+    private int SelectedNotificationId
+    {
+        get => _selectedNotificationId;
+        set => SetSelectedNotificationIdAsync(value);
+    }
+
+    private async void SetSelectedNotificationIdAsync(int value)
+    {
+        _selectedNotificationId = value;
+        await UpdateSelectedNotification();
+    }
+
+
+    private async Task LoadNotifications()
+    {
+        await using var context = await ContextFactory.CreateDbContextAsync();
+        Notifications = await context.Notification
+            .Include(n => n.NotificationUsers)
+            .ThenInclude(nu => nu.User)
+            .Include(n => n.NotificationRoles)
+            .ThenInclude(nr => nr.Role)
+            .ToListAsync();
+
+        AllUsers = await context.User
+            .Include(u => u.UserRoles)
+            .ThenInclude(ur => ur.Role)
+            .ToListAsync();
+    }
+
+
+    private async Task UpdateSelectedNotification()
+    {
+        if (SelectedNotificationId != 0)
+        {
+            await using var context = await ContextFactory.CreateDbContextAsync();
+            SelectedNotification = await context.Notification
+                .Include(n => n.NotificationRoles)
+                .ThenInclude(nr => nr.Role)
+                .Include(n => n.NotificationUsers)
+                .ThenInclude(nu => nu.User)
+                .FirstOrDefaultAsync(n => n.NotificationId == SelectedNotificationId);
+        }
+        else
+        {
+            SelectedNotification = null;
+        }
+    }
+
+    private IEnumerable<User> UsersWithAssignedRoles()
+    {
+        if (SelectedNotification == null || AllUsers == null)
+        {
+            return Enumerable.Empty<User>();
+        }
+
+        var roleIds = SelectedNotification.NotificationRoles.Select(nr => nr.RoleId).ToList();
+        var userIds = SelectedNotification.NotificationUsers.Select(nu => nu.UserId).ToList();
+        return AllUsers.Where(u => u.UserRoles.Any(ur => roleIds.Contains(ur.RoleId)) || userIds.Contains(u.UserId));
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadNotifications();
+    }
+
+}
