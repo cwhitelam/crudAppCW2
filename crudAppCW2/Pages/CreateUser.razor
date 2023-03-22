@@ -2,7 +2,6 @@
 @using Microsoft.AspNetCore.Components
 @using crudAppCW2.Data
 @using crudAppCW2.Data.Models
-@using crudAppCW2.Models
 @using Microsoft.EntityFrameworkCore
 @inject IDbContextFactory<AppDbContext> ContextFactory
 
@@ -11,32 +10,32 @@
 
 <h3>Create New User</h3>
 
-<EditForm Model="@User" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
+<EditForm Model="@_user" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
     <DataAnnotationsValidator/>
     <ValidationSummary/>
 
     <div class="form-group">
-        <label for="firstName">First Name:</label>
-        <InputText @bind-Value="User.FirstName" placeholder="First Name" class="form-control" style="width: 450px;" @oninput="(() => CapitalizeName(User, u => u.FirstName, (u, value) => u.FirstName = value))"/>
-        <ValidationMessage For="@(() => User.FirstName)"/>
+        <label>First Name:</label>
+        <InputText @bind-Value="_user.FirstName" placeholder="First Name" class="form-control" style="width: 450px;" @oninput="(() => { if (_user?.FirstName != null) { CapitalizeName(_user, u => u.FirstName, (u, value) => u.FirstName = value); }})"/>
+        <ValidationMessage For="@(() => _user!.FirstName)"/>
     </div>
 
     <div class="form-group">
-        <label for="lastName">Last Name:</label>
-        <InputText @bind-Value="User.LastName" placeholder="Last Name" class="form-control" style="width: 450px;" @oninput="(() => CapitalizeName(User, u => u.LastName, (u, value) => u.LastName = value))"/>
-        <ValidationMessage For="@(() => User.LastName)"/>
+        <label>Last Name:</label>
+        <InputText @bind-Value="_user.LastName" placeholder="Last Name" class="form-control" style="width: 450px;" @oninput="(() => { if (_user?.LastName != null) { CapitalizeName(_user, u => u.LastName, (u, value) => u.LastName = value); }})"/>
+        <ValidationMessage For="@(() => _user!.LastName)"/>
     </div>
 
     <div class="form-group">
-        <label for="email">Email:</label>
-        <InputText @bind-Value="User.Email" placeholder="Email" class="form-control" style="width: 450px;"/>
-        <ValidationMessage For="@(() => User.Email)"/>
+        <label>Email:</label>
+        <InputText @bind-Value="_user.Email" placeholder="Email" class="form-control" style="width: 450px;"/>
+        <ValidationMessage For="@(() => _user!.Email)"/>
     </div>
 
     <div class="form-group d-flex">
         <div class="mr-4">
-            <label for="role1">Choose Role:</label>
-            @foreach (var userRole in User.UserRoles)
+            <label>Choose Role:</label>
+            @foreach (var userRole in _user!.UserRoles)
             {
                 <div class="d-flex mb-2 me-3">
                     <select @bind="userRole.RoleId" class="form-select" style="width: 160px;">
@@ -45,19 +44,19 @@
                             <option value="@role.RoleId">@role.Name</option>
                         }
                     </select>
-                    <button type="button" class="btn btn-danger ms-2" @onclick="@(() => User.UserRoles.Remove(userRole))">
+                    <button type="button" class="btn btn-danger ms-2" @onclick="@(() => _user.UserRoles.Remove(userRole))">
                         Remove
                     </button>
                 </div>
             }
-            <button type="button" class="btn btn-primary" @onclick="@(() => User.UserRoles.Add(new UserRole { RoleId = 1 }))">
+            <button type="button" class="btn btn-primary" @onclick="@(() => _user.UserRoles.Add(new UserRole { RoleId = 1 }))">
                 Add Role +
             </button>
         </div>
 
         <div>
-            <label for="role2">Choose Department:</label>
-            <select @bind="User.DepartmentId" class="form-select" style="width: 290px;">
+            <label>Choose Department:</label>
+            <select @bind="_user.DepartmentId" class="form-select" style="width: 290px;">
                 @foreach (var department in Departments)
                 {
                     <option value="@department.DepartmentId">@department.Name</option>
@@ -74,7 +73,8 @@
 
 
 @code {
-    private User? User = new User
+
+    private User? _user = new User
     {
         UserRoles = new List<UserRole>
         {
@@ -82,30 +82,26 @@
         }
     };
 
-    private List<Department> Departments { get; set; }
-    private List<Role> Roles { get; set; }
+    private List<Department> Departments { get; set; } = null!;
+    private List<Role> Roles { get; set; } = null!;
 
     private bool IsBusy { get; set; }
 
-    private string? SuccessMessage { get; set; }
-
-    private string? ErrorMessage { get; set; }
-
     [Inject]
-    private NavigationManager _navigationManager { get; set; }
+    private NavigationManager NavigationManager { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
         await LoadData();
     }
-    
+
     private async Task LoadData()
     {
-        await using var context = ContextFactory.CreateDbContext();
+        await using var context = await ContextFactory.CreateDbContextAsync();
         Departments = await context.Department.ToListAsync();
         Roles = await context.Role.ToListAsync();
     }
-    
+
     private async Task HandleValidSubmit()
     {
         if (IsBusy)
@@ -117,24 +113,21 @@
 
         try
         {
-            if (User is not null)
+            if (_user is not null)
             {
     // Capitalize first and last name before saving
-                CapitalizeName(User, u => u.FirstName, (u, value) => u.FirstName = value);
-                CapitalizeName(User, u => u.LastName, (u, value) => u.LastName = value);
+                CapitalizeName(_user, u => u.FirstName!, (u, value) => u.FirstName = value);
+                CapitalizeName(_user, u => u.LastName!, (u, value) => u.LastName = value);
 
-                User.DepartmentId = User.DepartmentId; // Set DepartmentId
+                _user.DepartmentId = _user.DepartmentId; // Set DepartmentId
 
                 await using var context = await ContextFactory.CreateDbContextAsync();
 
-                context.User.Add(User);
+                context.User.Add(_user);
                 await context.SaveChangesAsync();
 
-                SuccessMessage = $"User {User.FirstName} {User.LastName} was added successfully.";
-                ErrorMessage = null;
-
     // Reset User object for next creation
-                User = new User
+                _user = new User
                 {
                     UserRoles = new List<UserRole>
                     {
@@ -143,10 +136,9 @@
                 };
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            SuccessMessage = null;
-            ErrorMessage = $"Error while adding user: {ex.Message}";
+    // ignored
         }
         finally
         {
@@ -177,13 +169,11 @@
 
     private void CreateUsers()
     {
-        _navigationManager.NavigateTo("/Users");
+        NavigationManager.NavigateTo("/Users");
     }
 
     private void HandleInvalidSubmit()
     {
-        SuccessMessage = null;
-        ErrorMessage = null;
     }
 
 }
