@@ -1,8 +1,9 @@
 @page "/DeletedUsers"
-@using crudAppCW2.Models
 @using crudAppCW2.Data
+@using crudAppCW2.Data.Models
 @using Microsoft.EntityFrameworkCore
 @inject IDbContextFactory<AppDbContext> ContextFactory
+@inject NavigationManager NavigationManager
 
 <PageTitle>Deleted Users</PageTitle>
 
@@ -12,8 +13,7 @@
 <button class="btn btn-outline-success btn-sm" @onclick="async () => await RestoreSelectedUsers()">Restore Selected</button>
 
 
-
-@if (DeletedUsersTable == null)
+@if (DeletedUsersTable.Count == 0)
 {
     <p>Loading...</p>
 }
@@ -30,16 +30,16 @@ else
         </tr>
         </thead>
         <tbody>
-        @foreach (var User in DeletedUsersTable)
+        @foreach (var user in DeletedUsersTable)
         {
             <tr>
                 <td>
-                    <input type="checkbox" @bind="User.IsSelected"/>
+                    <input type="checkbox" @bind="user.IsSelected"/>
                 </td>
-                <td>@User.GetCapitalizedString(User.FirstName) @User.GetCapitalizedString(User.LastName)</td>
-                <td>@User.Email</td>
+                <td>@User.GetCapitalizedString(user.FirstName) @User.GetCapitalizedString(user.LastName)</td>
+                <td>@user.Email</td>
                 <td>
-                    @foreach (var userRole in User.UserRoles)
+                    @foreach (var userRole in user.UserRoles)
                     {
                         <div class="me-1">
                             @userRole.Role?.Name
@@ -47,10 +47,10 @@ else
                     }
                 </td>
                 <td>
-                    @User.Department?.Name
+                    @user.Department?.Name
                 </td>
                 <td>
-                    <button class="btn btn-success" @onclick="async () => await RestoreUser(User.UserId)">Restore</button>
+                    <button class="btn btn-success" @onclick="async () => await RestoreUser(user.UserId)">Restore</button>
                 </td>
             </tr>
         }
@@ -60,11 +60,7 @@ else
 }
 
 @code {
-    private List<User> DeletedUsersTable { get; set; }
-
-    [Inject]
-    private NavigationManager NavigationManager { get; set; }
-
+    private List<User> DeletedUsersTable { get; set; } = new List<User>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -78,7 +74,7 @@ else
 
     private async Task LoadData()
     {
-        await using var context = ContextFactory.CreateDbContext();
+        await using var context = await ContextFactory.CreateDbContextAsync();
         DeletedUsersTable = await context.User
             .Include(x => x.Department)
             .Include(x => x.UserRoles).ThenInclude(x => x.Role)
@@ -89,7 +85,7 @@ else
 
     private async Task RestoreUser(int id)
     {
-        await using var context = ContextFactory.CreateDbContext();
+        await using var context = await ContextFactory.CreateDbContextAsync();
         var userToRestore = await context.User.FirstOrDefaultAsync(u => u.UserId == id);
         if (userToRestore != null)
         {
@@ -111,7 +107,7 @@ else
 
     private async Task RestoreSelectedUsers()
     {
-        await using var context = ContextFactory.CreateDbContext();
+        await using var context = await ContextFactory.CreateDbContextAsync();
         foreach (var user in DeletedUsersTable.Where(u => u.IsSelected))
         {
             var userToRestore = await context.User.FirstOrDefaultAsync(u => u.UserId == user.UserId);
@@ -129,4 +125,5 @@ else
     {
         NavigationManager.NavigateTo("/Users");
     }
-}   
+
+}
