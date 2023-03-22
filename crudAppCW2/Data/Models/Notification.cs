@@ -16,7 +16,7 @@ namespace crudAppCW2.Data.Models
         public bool IsSelected { get; set; }
         
         public DateTime CreatedDateTime { get; set; }
-        public List<NotificationRole>? NotificationRoles { get; set; }
-        public List<NotificationUser>? NotificationUsers { get; set; }
+        public List<NotificationRole> NotificationRoles { get; set; } = new List<NotificationRole>();
+        public List<NotificationUser> NotificationUsers { get; set; } = new List<NotificationUser>();
     }
 }
