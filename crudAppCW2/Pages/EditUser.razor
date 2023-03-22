@@ -1,7 +1,6 @@
 @page "/EditUser/{id:int}"
 @using crudAppCW2.Data
 @using crudAppCW2.Data.Models
-@using crudAppCW2.Models
 @using Microsoft.AspNetCore.Components
 @using Microsoft.EntityFrameworkCore
 @inject IDbContextFactory<AppDbContext> ContextFactory
@@ -32,7 +31,7 @@ else
         </div>
         <div class="form-group d-flex">
             <div class="mr-4">
-                <label for="role1">Choose Role:</label>
+                <label>Choose Role:</label>
                 @foreach (var userRole in User.UserRoles)
                 {
                     <div class="d-flex mb-2 me-3">
@@ -53,7 +52,7 @@ else
             </div>
 
             <div>
-                <label for="department2">Choose Department:</label>
+                <label>Choose Department:</label>
                 <select @bind="User.DepartmentId" class="form-select" style="width: 290px;">
                     @foreach (var department in Departments)
                     {
@@ -69,12 +68,9 @@ else
 }
 
 @code {
-    private User User { get; set; }
-    private List<Department> Departments { get; set; }
-    private List<Role> Roles { get; set; }
-
-    [Inject]
-    private NavigationManager _navigationManager { get; set; }
+    private User? User { get; set; }
+    private List<Department> Departments { get; set; } = new List<Department>();
+    private List<Role> Roles { get; set; } = new List<Role>();
 
     [Parameter]
     public int Id { get; set; }
@@ -86,7 +82,7 @@ else
 
     private async Task LoadData()
     {
-        await using var context = ContextFactory.CreateDbContext();
+        await using var context = await ContextFactory.CreateDbContextAsync();
         User = await context.User
             .Include(x => x.Department)
             .Include(x => x.UserRoles)
@@ -105,7 +101,7 @@ else
         CapitalizeName(User, u => u.FirstName, (u, value) => u.FirstName = value);
         CapitalizeName(User, u => u.LastName, (u, value) => u.LastName = value);
 
-        await using var context = ContextFactory.CreateDbContext();
+        await using var context = await ContextFactory.CreateDbContextAsync();
 
         var userRoles = await context.UserRole.Where(x => x.UserId == User.UserId).ToListAsync();
         foreach (var userRole in User.UserRoles)
@@ -147,11 +143,6 @@ else
 
         name = string.Join(" ", words);
         nameSetter(user, name);
-    }
-
-    private void CreateUsers()
-    {
-        _navigationManager.NavigateTo("/Users");
     }
 
 }
