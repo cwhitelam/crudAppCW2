@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using crudAppCW2.Data.Models;
 
-namespace crudAppCW2.Models;
+namespace crudAppCW2.Data.Models;
 
 public class User
 {
@@ -16,7 +15,7 @@ public class User
     [Required(ErrorMessage = "Please enter your email")]
     public string? Email { get; set; }
 
-    
+
     public bool IsRestored { get; set; }
     public bool IsSelected { get; set; }
 
@@ -24,11 +23,10 @@ public class User
     public int? DepartmentId { get; set; }
     public Department? Department { get; set; }
 
-    public List<UserRole> UserRoles { get; set; }
-    public List<NotificationUser> NotificationUsers { get; set; }
+    public List<UserRole> UserRoles { get; set; } = new List<UserRole>();
+    public List<NotificationUser> NotificationUsers { get; set; } = new List<NotificationUser>(); 
 
-
-    public string GetCapitalizedString(string str)
+    public static string? GetCapitalizedString(string? str)
     {
         if (string.IsNullOrWhiteSpace(str))
         {
@@ -47,5 +45,4 @@ public class User
 
         return string.Join(' ', words);
     }
-
 }
