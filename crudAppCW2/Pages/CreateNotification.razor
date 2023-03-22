@@ -1,5 +1,4 @@
 @page "/CreateNotification"
-@using crudAppCW2.Models
 @using crudAppCW2.Data
 @using crudAppCW2.Data.Models
 @using Microsoft.EntityFrameworkCore
@@ -36,7 +35,7 @@
     <br/>
     <div class="d-flex">
         <div class="mb-3 me-5">
-            <label for="role1" class="me-2">Choose Role:</label>
+            <label class="me-2">Choose Role:</label>
             <div class="d-flex flex-column">
                 @foreach (var notificationRole in Notification.NotificationRoles)
                 {
@@ -58,7 +57,7 @@
             </div>
         </div>
         <div class="mb-4">
-            <label for="user1" class="me-2">Choose User(s):</label>
+            <label class="me-2">Choose User(s):</label>
             <div class="d-flex flex-column">
                 @foreach (var notificationUser in Notification.NotificationUsers)
                 {
@@ -97,10 +96,7 @@
 
     private IList<Role> Roles { get; set; } = new List<Role>();
     private IList<User> Users { get; set; } = new List<User>();
-
-    [Inject]
-    private NavigationManager _navigationManager { get; set; }
-
+    
     private bool NotificationCreated { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -136,10 +132,6 @@
     {
         await using var context = await ContextFactory.CreateDbContextAsync();
 
-    // Initialize the NotificationRoles and NotificationUsers collections if they are null
-        if (Notification.NotificationRoles == null) Notification.NotificationRoles = new List<NotificationRole>();
-        if (Notification.NotificationUsers == null) Notification.NotificationUsers = new List<NotificationUser>();
-
     // Create the notification
         var notification = new Notification
         {
@@ -158,9 +150,10 @@
         NavigationManager.NavigateTo("/NotificationList");
     }
 
+
     private void NavigateBack()
     {
-        _navigationManager.NavigateTo("/NotificationList");
+        NavigationManager.NavigateTo("/NotificationList");
     }
 
 
