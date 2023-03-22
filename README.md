@@ -20,3 +20,4 @@ This project was built using the following technologies:
 - Entity Framework Core
 - HTML/CSS
 - Bootstrap
+- SQLite Database
