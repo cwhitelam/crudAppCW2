@@ -19,5 +19,5 @@ This project was built using the following technologies:
 - ASP.NET Core
 - Entity Framework Core
 - HTML/CSS
-- Bootstrap
-- SQLite Database
+- Bootstrap 5
+- SQLite
